@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/item_progress"
+        style="@style/StyleK_Progress_Horizontal"
+        android:layout_height="10dp"
+        android:progress="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:progress="50" />
+
+    <TextView
+        android:id="@+id/item_txt"
+        style="@style/StyleK_Txt.Font_Sans_Serif.Gravity_Center.Style_Bold.Color_Gray_999.Size_016"
+        android:layout_marginHorizontal="@dimen/dp_016"
+        app:layout_constraintBottom_toBottomOf="@id/item_btn"
+        app:layout_constraintEnd_toStartOf="@id/item_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_btn"
+        tools:text="2" />
+
+    <Button
+        android:id="@+id/item_btn"
+        style="@style/StyleK_Btn"
+        android:layout_width="0dp"
+        android:layout_marginEnd="@dimen/dp_016"
+        android:backgroundTint="@color/cok_gray_424242"
+        android:text="add progress"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_txt"
+        app:layout_constraintTop_toBottomOf="@id/item_progress" />
+</androidx.constraintlayout.widget.ConstraintLayout>

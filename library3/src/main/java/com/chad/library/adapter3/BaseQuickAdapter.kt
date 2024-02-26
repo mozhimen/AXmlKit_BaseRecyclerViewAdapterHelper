@@ -139,7 +139,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
     private var mSpanSizeLookup: GridSpanSizeLookup? = null
     private var mOnItemClickListener: OnItemClickListener? = null
     private var mOnItemLongClickListener: OnItemLongClickListener? = null
-    private var mOnItemChildClickListener: OnItemChildClickListener? = null
+    private var mOnItemChildClickListener: OnItemChildClickListener<T>? = null
     private var mOnItemChildLongClickListener: OnItemChildLongClickListener? = null
     private var mUpFetchModule: BaseUpFetchModule? = null
     private var mDraggableModule: BaseDraggableModule? = null
@@ -1368,7 +1368,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
         this.mOnItemLongClickListener = listener
     }
 
-    fun setOnItemChildClickListener(listener: OnItemChildClickListener?) {
+    fun setOnItemChildClickListener(listener: OnItemChildClickListener<T>?) {
         this.mOnItemChildClickListener = listener
     }
 
@@ -1380,7 +1380,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
 
     fun getOnItemLongClickListener(): OnItemLongClickListener? = mOnItemLongClickListener
 
-    fun getOnItemChildClickListener(): OnItemChildClickListener? = mOnItemChildClickListener
+    fun getOnItemChildClickListener(): OnItemChildClickListener<T>? = mOnItemChildClickListener
 
     fun getOnItemChildLongClickListener(): OnItemChildLongClickListener? = mOnItemChildLongClickListener
 }

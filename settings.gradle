@@ -14,5 +14,17 @@ dependencyResolutionManagement {
     }
 }
 
-include ':app', ':library'
+include ':app'
+include ':library'
 include ':library3'
+include ':adapter3_test'
+//SwiftKit
+include ':SwiftKit'
+project(':SwiftKit').projectDir = new File("C:\\Users\\${System.getenv().get("USERNAME")}\\Documents\\GitHub\\SwiftKit")
+include ':SwiftKit:basick'
+include ':SwiftKit:uicorek'
+//AUICoreKit
+include ':AUICoreKit'
+project(':AUICoreKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AUICoreKit")
+include ':AUICoreKit:bark'
+include ':AUICoreKit:drawablek_progress'
