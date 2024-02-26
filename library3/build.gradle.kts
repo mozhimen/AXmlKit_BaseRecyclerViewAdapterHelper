@@ -1,6 +1,6 @@
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("com.android.library")
@@ -9,14 +9,16 @@ plugins {
     signing
 }
 
-val versionName = "4.1.4"
+val versionName = "3.0.14"
 
 
 android {
     compileSdk = 33
 
     defaultConfig {
-        minSdk = 16
+        minSdk = 14
+
+        consumerProguardFiles("proguard-rules.pro")
     }
 
 
@@ -39,7 +41,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "com.chad.library.adapter4"
+    namespace = "com.chad.library"
 
 
     publishing {
@@ -53,14 +55,13 @@ android {
 
 
 dependencies {
-    implementation("androidx.annotation:annotation:1.6.0")
+    implementation("androidx.annotation:annotation:1.5.0")
 
-    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
     implementation("androidx.databinding:databinding-runtime:8.0.0")
 }
 
-//---------- maven upload info -----------------------------------
 
 var signingKeyId = ""//签名的密钥后8位
 var signingPassword = ""//签名设置的密码
@@ -69,8 +70,8 @@ var ossrhUsername = ""//sonatype用户名
 var ossrhPassword = "" //sonatype密码
 
 
-val localProperties: File = project.rootProject.file("local.properties")
-
+//val localProperties: File = project.rootProject.file("local.properties")
+//
 //if (localProperties.exists()) {
 //    println("Found secret props file, loading props")
 //    val properties = Properties()
@@ -95,7 +96,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components.findByName("release"))
                 groupId = "io.github.cymchad"
-                artifactId = "BaseRecyclerViewAdapterHelper4"
+                artifactId = "BaseRecyclerViewAdapterHelper"
                 version = versionName
 
                 pom {
