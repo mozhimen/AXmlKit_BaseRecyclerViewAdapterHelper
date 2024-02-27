@@ -82,6 +82,10 @@ abstract class BaseItemProvider<T> {
      */
     open fun onViewDetachedFromWindow(holder: BaseViewHolder) {}
 
+    open fun onViewRecycled(holder: BaseViewHolder) {}
+
+    open fun onDetachedFromRecyclerView() {}
+
     /**
      * item 若想实现条目点击事件则重写该方法
      * @param helper VH

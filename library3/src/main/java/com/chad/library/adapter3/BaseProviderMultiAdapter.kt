@@ -1,5 +1,6 @@
 package com.chad.library.adapter3
 
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,9 @@ import com.chad.library.adapter3.viewholder.BaseViewHolder
  * @constructor
  */
 abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
-        BaseQuickAdapter<T, BaseViewHolder>(0, data) {
+    BaseQuickAdapter<T, BaseViewHolder>(0, data) {
+
+    private val TAG = "${this.javaClass.simpleName}>>>>>"
 
     private val mItemProviders by lazy(LazyThreadSafetyMode.NONE) { SparseArray<BaseItemProvider<T>>() }
 
@@ -39,6 +42,9 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
         provider.setAdapter(this)
         mItemProviders.put(provider.itemViewType, provider)
     }
+
+    fun getItemProviders(): SparseArray<BaseItemProvider<T>> =
+        mItemProviders
 
     override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val provider = getItemProvider(viewType)
@@ -87,6 +93,26 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
     override fun onViewDetachedFromWindow(holder: BaseViewHolder) {
         super.onViewDetachedFromWindow(holder)
         getItemProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder)
+    }
+
+    override fun onViewRecycled(holder: BaseViewHolder) {
+        super.onViewRecycled(holder)
+        Log.d(TAG, "onViewRecycled: ")
+        getItemProvider(holder.itemViewType)?.onViewRecycled(holder)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        Log.d(TAG, "onDetachedFromRecyclerView: ")
+        try {
+            for (i in 0 until getItemProviders().size()) {
+                val key: Int = getItemProviders().keyAt(i)
+                // get the object by the key.
+                getItemProviders().get(key)?.onDetachedFromRecyclerView()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     protected open fun bindClick(viewHolder: BaseViewHolder) {

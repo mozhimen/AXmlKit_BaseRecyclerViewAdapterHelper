@@ -2,6 +2,7 @@ package com.chad.library.adapter3
 
 import android.animation.Animator
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -1193,6 +1194,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
             return
         }
         this.data[index] = data
+        Log.d("BaseQuickAdapter>>>>>", "setData: $payload")
         notifyItemChanged(index + headerLayoutCount, payload)
     }
 
