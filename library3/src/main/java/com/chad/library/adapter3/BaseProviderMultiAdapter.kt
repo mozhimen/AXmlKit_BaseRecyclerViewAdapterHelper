@@ -1,5 +1,6 @@
 package com.chad.library.adapter3
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.util.SparseArray
 import android.view.View
@@ -71,44 +72,35 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
         }
     }
 
-    override fun convert(holder: BaseViewHolder, item: T) {
+    @SuppressLint("MissingSuperCall")
+    override fun onBindViewHolderInner(holder: BaseViewHolder, item: T) {
+        Log.d(TAG, "onBindViewHolderInner: holder $holder item $item")
         getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item)
     }
 
-    override fun convert(holder: BaseViewHolder, item: T, payloads: List<Any>) {
+    override fun onBindViewHolderInner(holder: BaseViewHolder, item: T, payloads: List<Any>) {
+        Log.d(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
         getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, payloads)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
     override fun onViewAttachedToWindow(holder: BaseViewHolder) {
-        super.onViewAttachedToWindow(holder)
         getItemProvider(holder.itemViewType)?.onViewAttachedToWindow(holder)
+        val type = holder.itemViewType
+        if (isFixedViewType(type)) {
+            setFullSpan(holder)
+        } else {
+            addAnimation(holder)
+        }
     }
 
     override fun onViewDetachedFromWindow(holder: BaseViewHolder) {
-        super.onViewDetachedFromWindow(holder)
         getItemProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder)
     }
 
     override fun onViewRecycled(holder: BaseViewHolder) {
-        super.onViewRecycled(holder)
-        Log.d(TAG, "onViewRecycled: ")
         getItemProvider(holder.itemViewType)?.onViewRecycled(holder)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        Log.d(TAG, "onDetachedFromRecyclerView: ")
-        try {
-            for (i in 0 until getItemProviders().size()) {
-                val key: Int = getItemProviders().keyAt(i)
-                // get the object by the key.
-                getItemProviders().get(key)?.onDetachedFromRecyclerView()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////

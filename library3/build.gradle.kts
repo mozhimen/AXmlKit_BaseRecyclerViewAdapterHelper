@@ -56,12 +56,9 @@ android {
 
 dependencies {
     implementation(project(":SwiftKit:basick"))
+    implementation(project(":SwiftKit:uicorek"))
     implementation(project(":AUICoreKit:vhk"))
-    implementation("androidx.annotation:annotation:1.5.0")
-
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-
-    implementation("androidx.databinding:databinding-runtime:8.0.0")
+//    implementation("androidx.databinding:databinding-runtime:8.0.0")
 }
 
 

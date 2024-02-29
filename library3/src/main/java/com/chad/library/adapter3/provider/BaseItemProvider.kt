@@ -9,13 +9,14 @@ import androidx.annotation.LayoutRes
 import com.chad.library.adapter3.BaseProviderMultiAdapter
 import com.chad.library.adapter3.util.getItemView
 import com.chad.library.adapter3.viewholder.BaseViewHolder
+import com.mozhimen.basick.utilk.bases.IUtilK
 import java.lang.ref.WeakReference
 
 /**
  * [BaseProviderMultiAdapter] 的Provider基类
  * @param T 数据类型
  */
-abstract class BaseItemProvider<T> {
+abstract class BaseItemProvider<T> : IUtilK {
 
     lateinit var context: Context
 
@@ -28,7 +29,6 @@ abstract class BaseItemProvider<T> {
     open fun getAdapter(): BaseProviderMultiAdapter<T>? {
         return weakAdapter?.get()
     }
-
 
     fun getChildClickViewIds() = this.clickViewIds
 
@@ -99,7 +99,10 @@ abstract class BaseItemProvider<T> {
      *
      * @param holder Holder of the view being attached
      */
-    open fun onViewAttachedToWindow(holder: BaseViewHolder) {}
+    @CallSuper
+    open fun onViewAttachedToWindow(holder: BaseViewHolder) {
+        holder.onViewAttachedToWindow()
+    }
 
     /**
      * Called when a view created by this [BaseItemProvider] has been detached from its
@@ -112,9 +115,15 @@ abstract class BaseItemProvider<T> {
      *
      * @param holder Holder of the view being detached
      */
-    open fun onViewDetachedFromWindow(holder: BaseViewHolder) {}
+    @CallSuper
+    open fun onViewDetachedFromWindow(holder: BaseViewHolder) {
+        holder.onViewDetachedFromWindow()
+    }
 
-    open fun onViewRecycled(holder: BaseViewHolder) {}
+    @CallSuper
+    open fun onViewRecycled(holder: BaseViewHolder) {
+        holder.onViewRecycled()
+    }
 
     ///////////////////////////////////////////////////////////////////////
 
