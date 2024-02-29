@@ -28,3 +28,4 @@ include ':AUICoreKit'
 project(':AUICoreKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AUICoreKit")
 include ':AUICoreKit:bark'
 include ':AUICoreKit:drawablek_progress'
+include ':AUICoreKit:vhk'

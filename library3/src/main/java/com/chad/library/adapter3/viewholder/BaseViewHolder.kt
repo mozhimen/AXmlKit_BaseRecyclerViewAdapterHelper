@@ -11,16 +11,19 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.mozhimen.uicorek.vhk.VHKLifecycle
 
 /**
  * ViewHolder 基类
  */
 @Keep
-open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+open class BaseViewHolder(view: View) : VHKLifecycle(view) {
     /**
      * Views indexed with their IDs
      */
     private val views: SparseArray<View> = SparseArray()
+
+    /////////////////////////////////////////////////////////////////////////////
 
     /**
      * 如果使用了 DataBinding 绑定 View，可调用此方法获取 [ViewDataBinding]

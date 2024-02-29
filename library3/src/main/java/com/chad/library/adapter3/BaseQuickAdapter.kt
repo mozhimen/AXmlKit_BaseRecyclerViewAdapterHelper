@@ -15,7 +15,6 @@ import androidx.annotation.IdRes
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

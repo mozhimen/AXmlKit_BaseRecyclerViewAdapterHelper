@@ -3,6 +3,7 @@ package com.chad.library.adapter3.provider
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import com.chad.library.adapter3.BaseProviderMultiAdapter
@@ -22,13 +23,37 @@ abstract class BaseItemProvider<T> {
     private val clickViewIds by lazy(LazyThreadSafetyMode.NONE) { ArrayList<Int>() }
     private val longClickViewIds by lazy(LazyThreadSafetyMode.NONE) { ArrayList<Int>() }
 
-    internal fun setAdapter(adapter: BaseProviderMultiAdapter<T>) {
-        weakAdapter = WeakReference(adapter)
-    }
+    ///////////////////////////////////////////////////////////////////////
 
     open fun getAdapter(): BaseProviderMultiAdapter<T>? {
         return weakAdapter?.get()
     }
+
+
+    fun getChildClickViewIds() = this.clickViewIds
+
+    fun getChildLongClickViewIds() = this.longClickViewIds
+
+    ///////////////////////////////////////////////////////////////////////
+
+    internal fun setAdapter(adapter: BaseProviderMultiAdapter<T>) {
+        weakAdapter = WeakReference(adapter)
+    }
+
+    fun addChildClickViewIds(@IdRes vararg ids: Int) {
+        ids.forEach {
+            this.clickViewIds.add(it)
+        }
+    }
+
+
+    fun addChildLongClickViewIds(@IdRes vararg ids: Int) {
+        ids.forEach {
+            this.longClickViewIds.add(it)
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
 
     abstract val itemViewType: Int
 
@@ -36,9 +61,7 @@ abstract class BaseItemProvider<T> {
         @LayoutRes
         get
 
-    abstract fun convert(helper: BaseViewHolder, item: T)
-
-    open fun convert(helper: BaseViewHolder, item: T, payloads: List<Any>) {}
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * （可选重写）创建 ViewHolder。
@@ -50,11 +73,20 @@ abstract class BaseItemProvider<T> {
         return BaseViewHolder(parent.getItemView(layoutId))
     }
 
+    @CallSuper
+    open fun onBindViewHolder(holder: BaseViewHolder, item: T) {
+        holder.onBind()
+    }
+
+    open fun onBindViewHolder(helper: BaseViewHolder, item: T, payloads: List<Any>) {}
+
     /**
      * （可选重写）ViewHolder创建完毕以后的回掉方法。
      * @param viewHolder VH
      */
     open fun onViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {}
+
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * Called when a view created by this [BaseItemProvider] has been attached to a window.
@@ -84,7 +116,7 @@ abstract class BaseItemProvider<T> {
 
     open fun onViewRecycled(holder: BaseViewHolder) {}
 
-    open fun onDetachedFromRecyclerView() {}
+    ///////////////////////////////////////////////////////////////////////
 
     /**
      * item 若想实现条目点击事件则重写该方法
@@ -110,22 +142,4 @@ abstract class BaseItemProvider<T> {
     open fun onChildLongClick(helper: BaseViewHolder, view: View, data: T, position: Int): Boolean {
         return false
     }
-
-    fun addChildClickViewIds(@IdRes vararg ids: Int) {
-        ids.forEach {
-            this.clickViewIds.add(it)
-        }
-    }
-
-    fun getChildClickViewIds() = this.clickViewIds
-
-    fun addChildLongClickViewIds(@IdRes vararg ids: Int) {
-        ids.forEach {
-            this.longClickViewIds.add(it)
-        }
-    }
-
-    fun getChildLongClickViewIds() = this.longClickViewIds
-
-
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter3.provider.BaseItemProvider
 import com.chad.library.adapter3.viewholder.BaseViewHolder
+import com.mozhimen.basick.utilk.bases.IUtilK
 
 /**
  * 当有多种条目的时候，避免在convert()中做太多的业务逻辑，把逻辑放在对应的 ItemProvider 中。
@@ -20,58 +21,11 @@ import com.chad.library.adapter3.viewholder.BaseViewHolder
  * @constructor
  */
 abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
-    BaseQuickAdapter<T, BaseViewHolder>(0, data) {
-
-    private val TAG = "${this.javaClass.simpleName}>>>>>"
+    BaseQuickAdapter<T, BaseViewHolder>(0, data),IUtilK {
 
     private val mItemProviders by lazy(LazyThreadSafetyMode.NONE) { SparseArray<BaseItemProvider<T>>() }
 
-    /**
-     * 返回 item 类型
-     * @param data List<T>
-     * @param position Int
-     * @return Int
-     */
-    protected abstract fun getItemType(data: List<T>, position: Int): Int
-
-    /**
-     * 必须通过此方法，添加 provider
-     * @param provider BaseItemProvider
-     */
-    open fun addItemProvider(provider: BaseItemProvider<T>) {
-        provider.setAdapter(this)
-        mItemProviders.put(provider.itemViewType, provider)
-    }
-
-    fun getItemProviders(): SparseArray<BaseItemProvider<T>> =
-        mItemProviders
-
-    override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val provider = getItemProvider(viewType)
-        checkNotNull(provider) { "ViewType: $viewType no such provider found，please use addItemProvider() first!" }
-        provider.context = parent.context
-        return provider.onCreateViewHolder(parent, viewType).apply {
-            provider.onViewHolderCreated(this, viewType)
-        }
-    }
-
-    override fun getDefItemViewType(position: Int): Int {
-        return getItemType(data, position)
-    }
-
-    override fun convert(holder: BaseViewHolder, item: T) {
-        getItemProvider(holder.itemViewType)!!.convert(holder, item)
-    }
-
-    override fun convert(holder: BaseViewHolder, item: T, payloads: List<Any>) {
-        getItemProvider(holder.itemViewType)!!.convert(holder, item, payloads)
-    }
-
-    override fun bindViewClickListener(viewHolder: BaseViewHolder, viewType: Int) {
-        super.bindViewClickListener(viewHolder, viewType)
-        bindClick(viewHolder)
-        bindChildClick(viewHolder, viewType)
-    }
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * 通过 ViewType 获取 BaseItemProvider
@@ -84,6 +38,48 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
     protected open fun getItemProvider(viewType: Int): BaseItemProvider<T>? {
         return mItemProviders.get(viewType)
     }
+
+    /**
+     * 必须通过此方法，添加 provider
+     * @param provider BaseItemProvider
+     */
+    open fun addItemProvider(provider: BaseItemProvider<T>) {
+        provider.setAdapter(this)
+        mItemProviders.put(provider.itemViewType, provider)
+    }
+
+    /**
+     * 返回 item 类型
+     * @param data List<T>
+     * @param position Int
+     * @return Int
+     */
+    protected abstract fun getItemType(data: List<T>, position: Int): Int
+
+    override fun getDefItemViewType(position: Int): Int {
+        return getItemType(data, position)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        val provider = getItemProvider(viewType)
+        checkNotNull(provider) { "ViewType: $viewType no such provider found，please use addItemProvider() first!" }
+        provider.context = parent.context
+        return provider.onCreateViewHolder(parent, viewType).apply {
+            provider.onViewHolderCreated(this, viewType)
+        }
+    }
+
+    override fun convert(holder: BaseViewHolder, item: T) {
+        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item)
+    }
+
+    override fun convert(holder: BaseViewHolder, item: T, payloads: List<Any>) {
+        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, payloads)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
 
     override fun onViewAttachedToWindow(holder: BaseViewHolder) {
         super.onViewAttachedToWindow(holder)
@@ -113,6 +109,14 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    override fun bindViewClickListener(viewHolder: BaseViewHolder, viewType: Int) {
+        super.bindViewClickListener(viewHolder, viewType)
+        bindClick(viewHolder)
+        bindChildClick(viewHolder, viewType)
     }
 
     protected open fun bindClick(viewHolder: BaseViewHolder) {

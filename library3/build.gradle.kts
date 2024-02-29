@@ -55,6 +55,8 @@ android {
 
 
 dependencies {
+    implementation(project(":SwiftKit:basick"))
+    implementation(project(":AUICoreKit:vhk"))
     implementation("androidx.annotation:annotation:1.5.0")
 
     implementation("androidx.recyclerview:recyclerview:1.2.1")
