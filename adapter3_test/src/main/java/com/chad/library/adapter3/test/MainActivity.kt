@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter3.BaseQuickAdapter
 import com.chad.library.adapter3.listener.OnItemChildClickListener
 import com.chad.library.adapter3.test.databinding.ActivityMainBinding
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVB
+import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
 
-class MainActivity : BaseActivityVB<ActivityMainBinding>() {
+class MainActivity : BaseActivityVDB<ActivityMainBinding>() {
     private val _adapter:MainAdapter by lazy {
         MainAdapter().apply {
             addChildClickViewIds(R.id.item_btn)
@@ -27,7 +27,7 @@ class MainActivity : BaseActivityVB<ActivityMainBinding>() {
 
     private val _progressBeans = mutableListOf<ProgressBean>()
     override fun initView(savedInstanceState: Bundle?) {
-        vb.mainRecycler.apply {
+        vdb.mainRecycler.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = _adapter
         }
