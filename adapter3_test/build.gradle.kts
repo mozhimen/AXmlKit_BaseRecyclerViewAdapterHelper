@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.chad.library.adapter3.test"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.chad.library.adapter3.test"
@@ -41,7 +41,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(project(":library3"))
     implementation(project(":SwiftKit:basick"))
-    implementation(project(":AUICoreKit:bark"))
+    implementation(project(":AXmlKit:bark"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -22,10 +22,10 @@ include ':adapter3_test'
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("C:\\Users\\${System.getenv().get("USERNAME")}\\Documents\\GitHub\\SwiftKit")
 include ':SwiftKit:basick'
-include ':SwiftKit:uicorek'
-//AUICoreKit
-include ':AUICoreKit'
-project(':AUICoreKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AUICoreKit")
-include ':AUICoreKit:bark'
-include ':AUICoreKit:drawablek_progress'
-include ':AUICoreKit:vhk'
+include ':SwiftKit:xmlk'
+//AXmlKit
+include ':AXmlKit'
+project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
+include ':AXmlKit:bark'
+include ':AXmlKit:drawablek_progress'
+include ':AXmlKit:vhk'

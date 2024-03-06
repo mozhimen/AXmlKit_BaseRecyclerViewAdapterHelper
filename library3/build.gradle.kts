@@ -13,7 +13,7 @@ val versionName = "3.0.14"
 
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 14
@@ -56,8 +56,8 @@ android {
 
 dependencies {
     implementation(project(":SwiftKit:basick"))
-    implementation(project(":SwiftKit:uicorek"))
-    implementation(project(":AUICoreKit:vhk"))
+    implementation(project(":SwiftKit:xmlk"))
+    implementation(project(":AXmlKit:vhk"))
 //    implementation("androidx.databinding:databinding-runtime:8.0.0")
 }
 

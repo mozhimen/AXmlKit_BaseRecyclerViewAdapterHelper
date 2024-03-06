@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.mozhimen.uicorek.vhk.VHKLifecycle
+import com.mozhimen.xmlk.vhk.VHKLifecycle
 
 /**
  * ViewHolder 基类
