@@ -9,7 +9,7 @@ import androidx.annotation.LayoutRes
 import com.chad.library.adapter3.BaseProviderMultiAdapter
 import com.chad.library.adapter3.util.getItemView
 import com.chad.library.adapter3.viewholder.BaseViewHolder
-import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.basick.utilk.commons.IUtilK
 import java.lang.ref.WeakReference
 
 /**

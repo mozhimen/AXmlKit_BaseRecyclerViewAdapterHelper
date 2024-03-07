@@ -35,7 +35,7 @@ import com.chad.library.adapter3.animation.AlphaInAnimation
 import com.chad.library.adapter3.animation.BaseAnimation
 import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
 import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStart
-import com.mozhimen.basick.utilk.bases.IUtilK
+import com.mozhimen.basick.utilk.commons.IUtilK
 import java.lang.reflect.Constructor
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Modifier
