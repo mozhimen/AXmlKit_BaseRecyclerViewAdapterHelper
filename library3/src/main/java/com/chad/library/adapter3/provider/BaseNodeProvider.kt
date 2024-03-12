@@ -5,8 +5,8 @@ import com.chad.library.adapter3.entity.node.BaseNode
 
 abstract class BaseNodeProvider : BaseItemProvider<BaseNode>() {
 
-    override fun getAdapter(): BaseNodeAdapter? {
-        return super.getAdapter() as? BaseNodeAdapter
+    override fun getProviderMultiAdapter(): BaseNodeAdapter? {
+        return super.getProviderMultiAdapter() as? BaseNodeAdapter
     }
 
 }

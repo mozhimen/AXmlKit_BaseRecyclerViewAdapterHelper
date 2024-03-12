@@ -26,7 +26,7 @@ abstract class BaseItemProvider<T> : IUtilK {
 
     ///////////////////////////////////////////////////////////////////////
 
-    open fun getAdapter(): BaseProviderMultiAdapter<T>? {
+    open fun getProviderMultiAdapter(): BaseProviderMultiAdapter<T>? {
         return weakAdapter?.get()
     }
 
