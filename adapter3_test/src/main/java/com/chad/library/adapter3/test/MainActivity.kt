@@ -12,9 +12,9 @@ class MainActivity : BaseActivityVDB<ActivityMainBinding>() {
     private val _adapter:MainAdapter by lazy {
         MainAdapter().apply {
             addChildClickViewIds(R.id.item_btn)
-            setOnItemChildClickListener(object : OnItemChildClickListener<ProgressBean> {
-                override fun onItemChildClick(adapter: BaseQuickAdapter<ProgressBean, *>, view: View, position: Int) {
-                    val item: ProgressBean = adapter.getItem(position)
+            setOnItemChildClickListener(object : OnItemChildClickListener<ItemBean> {
+                override fun onItemChildClick(adapter: BaseQuickAdapter<ItemBean, *>, view: View, position: Int) {
+                    val item: ItemBean = adapter.getItem(position)
                     item.progress += 10
                     if (item.progress > 100) {
                         item.progress = 0
@@ -25,7 +25,7 @@ class MainActivity : BaseActivityVDB<ActivityMainBinding>() {
         }
     }
 
-    private val _progressBeans = mutableListOf<ProgressBean>()
+    private val _itemBeans = mutableListOf<ItemBean>()
     override fun initView(savedInstanceState: Bundle?) {
         vdb.mainRecycler.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -33,8 +33,8 @@ class MainActivity : BaseActivityVDB<ActivityMainBinding>() {
         }
 
         for (i in 0 until 20) {
-            _progressBeans.add(i, ProgressBean(i, 0))
+            _itemBeans.add(i, ItemBean(i, 0))
         }
-        _adapter.addData(_progressBeans)
+        _adapter.addData(_itemBeans)
     }
 }

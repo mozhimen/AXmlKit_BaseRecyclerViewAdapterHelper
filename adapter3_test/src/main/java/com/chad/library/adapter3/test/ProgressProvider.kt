@@ -13,20 +13,21 @@ import com.mozhimen.basick.utilk.kotlin.normalize
  * @Date 2024/2/27 0:27
  * @Version 1.0
  */
-class ProgressProvider : BaseItemProvider<ProgressBean>() {
+class ProgressProvider : BaseItemProvider<ItemBean>() {
     override val itemViewType: Int
         get() = 1
     override val layoutId: Int
         get() = R.layout.item_main
 
-    override fun convert(helper: BaseViewHolder, item: ProgressBean) {
-        val progress = helper.getView<ProgressBar>(R.id.item_progress)
-        val txt = helper.getView<TextView>(R.id.item_txt)
+    override fun onBindViewHolder(holder: BaseViewHolder, item: ItemBean) {
+        super.onBindViewHolder(holder, item)
+        val progress = holder.getView<ProgressBar>(R.id.item_progress)
+        val txt = holder.getView<TextView>(R.id.item_txt)
         progress.progress = item.progress.normalize(0, 100)
         txt.text = item.id.toString()
     }
 
-    override fun convert(helper: BaseViewHolder, item: ProgressBean, payloads: List<Any>) {
+    override fun onBindViewHolder(helper: BaseViewHolder, item: ItemBean, payloads: List<Any>) {
         val progress = helper.getView<ProgressBar>(R.id.item_progress)
         if (payloads.isNotEmpty()) {
             val flag = payloads[0]

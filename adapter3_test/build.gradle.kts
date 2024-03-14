@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":library3"))
     implementation(project(":SwiftKit:basick"))
     implementation(project(":AXmlKit:bark"))
+    implementation(project(":AXmlKit:vhk"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

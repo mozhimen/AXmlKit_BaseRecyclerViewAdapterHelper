@@ -7,7 +7,8 @@ package com.chad.library.adapter3.test
  * @Date 2024/2/27 0:26
  * @Version 1.0
  */
-data class ProgressBean(
+data class ItemBean(
+    val type: Int,
     var id: Int,
     var progress: Int
 )

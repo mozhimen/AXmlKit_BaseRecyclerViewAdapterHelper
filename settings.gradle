@@ -29,3 +29,4 @@ project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
 include ':AXmlKit:bark'
 include ':AXmlKit:drawablek_progress'
 include ':AXmlKit:vhk'
+include ':AXmlKit:recyclerk'
