@@ -7,7 +7,7 @@ package com.chad.library.adapter4.loadState
  *
  * @property endOfPaginationReached 是否已到达分页末尾
  */
-sealed class LoadState(
+sealed class SLoadState(
     val endOfPaginationReached: Boolean
 ) {
 
@@ -16,7 +16,7 @@ sealed class LoadState(
      *
      * 当前没有任何状态（例如：初始化时，刷新数据时）
      */
-    object None: LoadState(false) {
+    object None: SLoadState(false) {
         override fun equals(other: Any?): Boolean {
             return other is None &&
                     endOfPaginationReached == other.endOfPaginationReached
@@ -40,7 +40,7 @@ sealed class LoadState(
      */
     class NotLoading(
         endOfPaginationReached: Boolean
-    ) : LoadState(endOfPaginationReached) {
+    ) : SLoadState(endOfPaginationReached) {
         override fun toString(): String {
             return "NotLoading(endOfPaginationReached=$endOfPaginationReached)"
         }
@@ -68,7 +68,7 @@ sealed class LoadState(
      *
      * 正在加载
      */
-    object Loading : LoadState(false) {
+    object Loading : SLoadState(false) {
         override fun toString(): String {
             return "Loading(endOfPaginationReached=$endOfPaginationReached)"
         }
@@ -92,7 +92,7 @@ sealed class LoadState(
      */
     class Error(
         val error: Throwable
-    ) : LoadState(false) {
+    ) : SLoadState(false) {
         override fun equals(other: Any?): Boolean {
             return other is Error &&
                     endOfPaginationReached == other.endOfPaginationReached &&
