@@ -4,7 +4,7 @@ import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.SLoadState
 import com.chad.library.adapter4.loadState.LoadStateAdapter
 
 /**
@@ -53,10 +53,10 @@ abstract class TrailingLoadStateAdapter<VH : RecyclerView.ViewHolder>(
 
     private var mDelayNextLoadFlag: Boolean = false
 
-    override fun displayLoadStateAsItem(loadState: LoadState): Boolean {
+    override fun displayLoadStateAsItem(loadState: SLoadState): Boolean {
         return super.displayLoadStateAsItem(loadState)
-                || (loadState is LoadState.NotLoading && !loadState.endOfPaginationReached) // 加载完成的状态，并且还有分页数据的时候，需要显示
-                || (isLoadEndDisplay && (loadState is LoadState.NotLoading && loadState.endOfPaginationReached)) // 加载彻底结束，不会再有分页数据的情况，并且需要显示结束后的item
+                || (loadState is SLoadState.NotLoading && !loadState.endOfPaginationReached) // 加载完成的状态，并且还有分页数据的时候，需要显示
+                || (isLoadEndDisplay && (loadState is SLoadState.NotLoading && loadState.endOfPaginationReached)) // 加载彻底结束，不会再有分页数据的情况，并且需要显示结束后的item
     }
 
     @CallSuper
@@ -79,7 +79,7 @@ abstract class TrailingLoadStateAdapter<VH : RecyclerView.ViewHolder>(
             return
         }
 
-        if (loadState is LoadState.NotLoading && !loadState.endOfPaginationReached) {
+        if (loadState is SLoadState.NotLoading && !loadState.endOfPaginationReached) {
             val recyclerView = recyclerView ?: return
 
             if (recyclerView.isComputingLayout) {
@@ -106,12 +106,12 @@ abstract class TrailingLoadStateAdapter<VH : RecyclerView.ViewHolder>(
     }
 
     fun invokeLoadMore() {
-        loadState = LoadState.Loading
+        loadState = SLoadState.Loading
         onTrailingListener?.onLoad()
     }
 
     fun invokeFailRetry() {
-        loadState = LoadState.Loading
+        loadState = SLoadState.Loading
         onTrailingListener?.onFailRetry()
     }
 

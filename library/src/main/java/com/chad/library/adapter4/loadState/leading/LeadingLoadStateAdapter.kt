@@ -2,7 +2,7 @@ package com.chad.library.adapter4.loadState.leading
 
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.SLoadState
 import com.chad.library.adapter4.loadState.LoadStateAdapter
 
 /**
@@ -33,8 +33,8 @@ abstract class LeadingLoadStateAdapter<VH: RecyclerView.ViewHolder> : LoadStateA
 
     private var mDelayNextLoadFlag: Boolean = false
 
-    override fun displayLoadStateAsItem(loadState: LoadState): Boolean {
-        return loadState is LoadState.Loading
+    override fun displayLoadStateAsItem(loadState: SLoadState): Boolean {
+        return loadState is SLoadState.Loading
     }
 
     @CallSuper
@@ -51,7 +51,7 @@ abstract class LeadingLoadStateAdapter<VH: RecyclerView.ViewHolder> : LoadStateA
 
         if (mDelayNextLoadFlag) return
 
-        if (loadState is LoadState.NotLoading && !loadState.endOfPaginationReached) {
+        if (loadState is SLoadState.NotLoading && !loadState.endOfPaginationReached) {
             val recyclerView = recyclerView ?: return
 
             if (recyclerView.isComputingLayout) {
@@ -77,7 +77,7 @@ abstract class LeadingLoadStateAdapter<VH: RecyclerView.ViewHolder> : LoadStateA
     }
 
     fun invokeLoad() {
-        loadState = LoadState.Loading
+        loadState = SLoadState.Loading
         onLeadingListener?.onLoad()
     }
 

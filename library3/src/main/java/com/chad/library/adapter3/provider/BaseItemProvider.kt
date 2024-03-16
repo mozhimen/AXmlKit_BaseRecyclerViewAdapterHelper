@@ -1,6 +1,7 @@
 package com.chad.library.adapter3.provider
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
@@ -74,11 +75,12 @@ abstract class BaseItemProvider<T> : IUtilK {
     }
 
     @CallSuper
-    open fun onBindViewHolder(holder: BaseViewHolder, item: T) {
+    open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int?) {
+        Log.v(TAG, "onBindViewHolder:         $holder position $position item $item")
         holder.onBind()
     }
 
-    open fun onBindViewHolder(helper: BaseViewHolder, item: T, payloads: List<Any>) {}
+    open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int?, payloads: List<Any>) {}
 
     /**
      * （可选重写）ViewHolder创建完毕以后的回掉方法。
@@ -100,7 +102,8 @@ abstract class BaseItemProvider<T> : IUtilK {
      * @param holder Holder of the view being attached
      */
     @CallSuper
-    open fun onViewAttachedToWindow(holder: BaseViewHolder) {
+    open fun onViewAttachedToWindow(holder: BaseViewHolder, item: T?, position: Int?) {
+        Log.v(TAG, "onViewAttachedToWindow:   $holder position $position item $item")
         holder.onViewAttachedToWindow()
     }
 
@@ -116,12 +119,14 @@ abstract class BaseItemProvider<T> : IUtilK {
      * @param holder Holder of the view being detached
      */
     @CallSuper
-    open fun onViewDetachedFromWindow(holder: BaseViewHolder) {
+    open fun onViewDetachedFromWindow(holder: BaseViewHolder, item: T?, position: Int?) {
+        Log.v(TAG, "onViewDetachedFromWindow: $holder position $position item $item")
         holder.onViewDetachedFromWindow()
     }
 
     @CallSuper
-    open fun onViewRecycled(holder: BaseViewHolder) {
+    open fun onViewRecycled(holder: BaseViewHolder, item: T?, position: Int?) {
+        Log.v(TAG, "onViewRecycled:           $holder position $position item $item")
         holder.onViewRecycled()
     }
 

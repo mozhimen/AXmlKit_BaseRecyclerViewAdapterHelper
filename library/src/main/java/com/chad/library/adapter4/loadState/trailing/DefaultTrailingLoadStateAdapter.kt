@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.R
-import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.SLoadState
 
 /**
  * Default trailing load state adapter
@@ -29,7 +29,7 @@ internal class DefaultTrailingLoadStateAdapter(isLoadEndDisplay: Boolean = true)
         val loadEndView: View = itemView.findViewById(R.id.load_more_load_end_view)
     }
 
-    override fun onCreateViewHolder( parent: ViewGroup, loadState: LoadState): TrailingLoadStateVH {
+    override fun onCreateViewHolder( parent: ViewGroup, loadState: SLoadState): TrailingLoadStateVH {
         return TrailingLoadStateVH(parent).apply {
             loadFailView.setOnClickListener {
                 // 失败重试点击事件
@@ -49,9 +49,9 @@ internal class DefaultTrailingLoadStateAdapter(isLoadEndDisplay: Boolean = true)
      *
      * 绑定加载状态
      */
-    override fun onBindViewHolder(holder: TrailingLoadStateVH, loadState: LoadState) {
+    override fun onBindViewHolder(holder: TrailingLoadStateVH, loadState: SLoadState) {
         when (loadState) {
-            is LoadState.NotLoading -> {
+            is SLoadState.NotLoading -> {
                 if (loadState.endOfPaginationReached) {
                     holder.loadCompleteView.visibility = View.GONE
                     holder.loadingView.visibility = View.GONE
@@ -64,19 +64,19 @@ internal class DefaultTrailingLoadStateAdapter(isLoadEndDisplay: Boolean = true)
                     holder.loadEndView.visibility = View.GONE
                 }
             }
-            is LoadState.Loading -> {
+            is SLoadState.Loading -> {
                 holder.loadCompleteView.visibility = View.GONE
                 holder.loadingView.visibility = View.VISIBLE
                 holder.loadFailView.visibility = View.GONE
                 holder.loadEndView.visibility = View.GONE
             }
-            is LoadState.Error -> {
+            is SLoadState.Error -> {
                 holder.loadCompleteView.visibility = View.GONE
                 holder.loadingView.visibility = View.GONE
                 holder.loadFailView.visibility = View.VISIBLE
                 holder.loadEndView.visibility = View.GONE
             }
-            is LoadState.None -> {
+            is SLoadState.None -> {
                 holder.loadCompleteView.visibility = View.GONE
                 holder.loadingView.visibility = View.GONE
                 holder.loadFailView.visibility = View.GONE
@@ -85,5 +85,5 @@ internal class DefaultTrailingLoadStateAdapter(isLoadEndDisplay: Boolean = true)
         }
     }
 
-    override fun getStateViewType(loadState: LoadState): Int = R.layout.brvah_trailing_load_more
+    override fun getStateViewType(loadState: SLoadState): Int = R.layout.brvah_trailing_load_more
 }

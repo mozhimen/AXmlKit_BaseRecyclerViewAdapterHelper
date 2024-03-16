@@ -2,7 +2,7 @@ package com.chad.library.adapter4
 
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.SLoadState
 import com.chad.library.adapter4.loadState.leading.DefaultLeadingLoadStateAdapter
 import com.chad.library.adapter4.loadState.leading.LeadingLoadStateAdapter
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
@@ -79,26 +79,26 @@ class QuickAdapterHelper private constructor(
      * Loading state of the head.
      * 首部的加载状态
      */
-    var leadingLoadState: LoadState
+    var leadingLoadState: SLoadState
         set(value) {
             leadingLoadStateAdapter?.loadState = value
         }
         get() {
             return leadingLoadStateAdapter?.loadState
-                ?: LoadState.NotLoading(endOfPaginationReached = false)
+                ?: SLoadState.NotLoading(endOfPaginationReached = false)
         }
 
     /**
      * Loading state of the tail.
      * 尾部的加载状态
      */
-    var trailingLoadState: LoadState
+    var trailingLoadState: SLoadState
         set(value) {
             trailingLoadStateAdapter?.loadState = value
         }
         get() {
             return trailingLoadStateAdapter?.loadState
-                ?: LoadState.NotLoading(endOfPaginationReached = false)
+                ?: SLoadState.NotLoading(endOfPaginationReached = false)
         }
 
     private var firstAdapterOnViewAttachChangeListener: BaseQuickAdapter.OnViewAttachStateChangeListener? =

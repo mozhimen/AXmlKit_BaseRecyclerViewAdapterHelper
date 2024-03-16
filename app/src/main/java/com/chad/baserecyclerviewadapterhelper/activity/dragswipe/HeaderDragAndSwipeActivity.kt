@@ -15,7 +15,7 @@ import com.chad.baserecyclerviewadapterhelper.utils.vibrate
 import com.chad.library.adapter4.QuickAdapterHelper
 import com.chad.library.adapter4.dragswipe.setItemDragListener
 import com.chad.library.adapter4.dragswipe.setItemSwipeListener
-import com.chad.library.adapter4.loadState.LoadState.NotLoading
+import com.chad.library.adapter4.loadState.SLoadState.NotLoading
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
 import com.chad.library.adapter4.viewholder.QuickViewHolder
 import kotlinx.coroutines.Dispatchers

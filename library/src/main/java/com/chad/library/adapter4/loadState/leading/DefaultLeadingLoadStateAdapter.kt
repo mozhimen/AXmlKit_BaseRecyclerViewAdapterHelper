@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.R
-import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.SLoadState
 
 /**
  * Default leading load state adapter
@@ -29,17 +29,17 @@ internal class DefaultLeadingLoadStateAdapter :
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LeadingLoadStateVH {
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: SLoadState): LeadingLoadStateVH {
         return LeadingLoadStateVH(parent)
     }
 
-    override fun onBindViewHolder(holder: LeadingLoadStateVH, loadState: LoadState) {
-        if (loadState is LoadState.Loading) {
+    override fun onBindViewHolder(holder: LeadingLoadStateVH, loadState: SLoadState) {
+        if (loadState is SLoadState.Loading) {
             holder.loadingProgress.visibility = View.VISIBLE
         } else {
             holder.loadingProgress.visibility = View.GONE
         }
     }
 
-    override fun getStateViewType(loadState: LoadState): Int = R.layout.brvah_leading_load_more
+    override fun getStateViewType(loadState: SLoadState): Int = R.layout.brvah_leading_load_more
 }

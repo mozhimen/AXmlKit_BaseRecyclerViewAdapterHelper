@@ -22,7 +22,7 @@ import com.mozhimen.basick.utilk.commons.IUtilK
  * @constructor
  */
 abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
-    BaseQuickAdapter<T, BaseViewHolder>(0, data),IUtilK {
+    BaseQuickAdapter<T, BaseViewHolder>(0, data), IUtilK {
 
     private val mItemProviders by lazy(LazyThreadSafetyMode.NONE) { SparseArray<BaseItemProvider<T>>() }
 
@@ -74,19 +74,18 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
 
     @SuppressLint("MissingSuperCall")
     override fun onBindViewHolderInner(holder: BaseViewHolder, item: T) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $item")
-        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item)
+        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, getPosition(holder))
     }
 
     override fun onBindViewHolderInner(holder: BaseViewHolder, item: T, payloads: List<Any>) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
-        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, payloads)
+        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, getPosition(holder), payloads)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
     override fun onViewAttachedToWindow(holder: BaseViewHolder) {
-        getItemProvider(holder.itemViewType)?.onViewAttachedToWindow(holder)
+        val position = getPosition(holder)
+        getItemProvider(holder.itemViewType)?.onViewAttachedToWindow(holder, position?.let { getItemOrNull(it) }, position)
         val type = holder.itemViewType
         if (isFixedViewType(type)) {
             setFullSpan(holder)
@@ -96,11 +95,13 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
     }
 
     override fun onViewDetachedFromWindow(holder: BaseViewHolder) {
-        getItemProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder)
+        val position = getPosition(holder)
+        getItemProvider(holder.itemViewType)?.onViewDetachedFromWindow(holder, position?.let { getItemOrNull(it) }, position)
     }
 
     override fun onViewRecycled(holder: BaseViewHolder) {
-        getItemProvider(holder.itemViewType)?.onViewRecycled(holder)
+        val position = getPosition(holder)
+        getItemProvider(holder.itemViewType)?.onViewRecycled(holder, position?.let { getItemOrNull(it) }, position)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -116,12 +117,7 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
             //如果没有设置点击监听，则回调给 itemProvider
             //Callback to itemProvider if no click listener is set
             viewHolder.itemView.setOnClickListener {
-                var position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) {
-                    return@setOnClickListener
-                }
-                position -= headerLayoutCount
-
+                val position = getPosition(viewHolder) ?: return@setOnClickListener
                 val itemViewType = viewHolder.itemViewType
                 val provider = mItemProviders.get(itemViewType)
 
@@ -132,12 +128,7 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
             //如果没有设置长按监听，则回调给itemProvider
             // If you do not set a long press listener, callback to the itemProvider
             viewHolder.itemView.setOnLongClickListener {
-                var position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) {
-                    return@setOnLongClickListener false
-                }
-                position -= headerLayoutCount
-
+                val position = getPosition(viewHolder) ?: return@setOnLongClickListener false
                 val itemViewType = viewHolder.itemViewType
                 val provider = mItemProviders.get(itemViewType)
                 provider.onLongClick(viewHolder, it, data[position], position)
@@ -155,11 +146,7 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
                         it.isClickable = true
                     }
                     it.setOnClickListener { v ->
-                        var position: Int = viewHolder.bindingAdapterPosition
-                        if (position == RecyclerView.NO_POSITION) {
-                            return@setOnClickListener
-                        }
-                        position -= headerLayoutCount
+                        val position: Int = getPosition(viewHolder) ?: return@setOnClickListener
                         provider.onChildClick(viewHolder, v, data[position], position)
                     }
                 }
@@ -174,11 +161,7 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
                         it.isLongClickable = true
                     }
                     it.setOnLongClickListener { v ->
-                        var position: Int = viewHolder.bindingAdapterPosition
-                        if (position == RecyclerView.NO_POSITION) {
-                            return@setOnLongClickListener false
-                        }
-                        position -= headerLayoutCount
+                        val position: Int = getPosition(viewHolder) ?: return@setOnLongClickListener false
                         provider.onChildLongClick(viewHolder, v, data[position], position)
                     }
                 }

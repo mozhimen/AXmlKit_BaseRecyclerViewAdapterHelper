@@ -111,7 +111,7 @@ open class BaseBinderAdapter(list: MutableList<Any>? = null) : BaseQuickAdapter<
         return getItemBinderOrNull(holder.itemViewType)?.onFailedToRecycleView(holder) ?: false
     }
 
-    protected fun findViewType(clazz : Class<*>):Int {
+    protected fun findViewType(clazz: Class<*>): Int {
         val type = mTypeMap[clazz]
         checkNotNull(type) { "findViewType: ViewType: $clazz Not Find!" }
         return type
@@ -122,12 +122,7 @@ open class BaseBinderAdapter(list: MutableList<Any>? = null) : BaseQuickAdapter<
             //如果没有设置点击监听，则回调给 itemProvider
             //Callback to itemProvider if no click listener is set
             viewHolder.itemView.setOnClickListener {
-                var position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) {
-                    return@setOnClickListener
-                }
-                position -= headerLayoutCount
-
+                val position = getPosition(viewHolder) ?: return@setOnClickListener
                 val itemViewType = viewHolder.itemViewType
                 val binder = getItemBinder(itemViewType)
 
@@ -139,12 +134,7 @@ open class BaseBinderAdapter(list: MutableList<Any>? = null) : BaseQuickAdapter<
             //如果没有设置长按监听，则回调给itemProvider
             // If you do not set a long press listener, callback to the itemProvider
             viewHolder.itemView.setOnLongClickListener {
-                var position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) {
-                    return@setOnLongClickListener false
-                }
-                position -= headerLayoutCount
-
+                val position = getPosition(viewHolder) ?: return@setOnLongClickListener false
                 val itemViewType = viewHolder.itemViewType
                 val binder = getItemBinder(itemViewType)
 
@@ -164,11 +154,7 @@ open class BaseBinderAdapter(list: MutableList<Any>? = null) : BaseQuickAdapter<
                         it.isClickable = true
                     }
                     it.setOnClickListener { v ->
-                        var position: Int = viewHolder.bindingAdapterPosition
-                        if (position == RecyclerView.NO_POSITION) {
-                            return@setOnClickListener
-                        }
-                        position -= headerLayoutCount
+                        val position: Int = getPosition(viewHolder) ?: return@setOnClickListener
                         val item = data.getOrNull(position) ?: return@setOnClickListener
                         provider.onChildClick(viewHolder, v, item, position)
                     }
@@ -184,11 +170,7 @@ open class BaseBinderAdapter(list: MutableList<Any>? = null) : BaseQuickAdapter<
                         it.isLongClickable = true
                     }
                     it.setOnLongClickListener { v ->
-                        var position: Int = viewHolder.bindingAdapterPosition
-                        if (position == RecyclerView.NO_POSITION) {
-                            return@setOnLongClickListener false
-                        }
-                        position -= headerLayoutCount
+                        val position: Int = getPosition(viewHolder) ?: return@setOnLongClickListener false
                         val item = data.getOrNull(position) ?: return@setOnLongClickListener false
                         provider.onChildLongClick(viewHolder, v, item, position)
                     }

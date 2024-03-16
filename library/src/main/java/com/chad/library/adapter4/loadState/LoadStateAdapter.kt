@@ -20,7 +20,7 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
      * 要在适配器中显示的 LoadState。更改此属性将立即通知适配器更改 item 的样式。
      * [LoadState.None] 为初始状态。
      */
-    var loadState: LoadState = LoadState.None
+    var loadState: SLoadState = SLoadState.None
         set(loadState) {
             if (field != loadState) {
                 val oldState = field
@@ -50,7 +50,7 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
      */
     val isLoading: Boolean
         get() {
-            return loadState == LoadState.Loading
+            return loadState == SLoadState.Loading
         }
 
     var recyclerView: RecyclerView? = null
@@ -96,7 +96,7 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
      * @see [getItemViewType]
      * @see [displayLoadStateAsItem]
      */
-    abstract fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): VH
+    abstract fun onCreateViewHolder(parent: ViewGroup, loadState: SLoadState): VH
 
     /**
      * Called to bind the passed LoadState to the ViewHolder.
@@ -108,7 +108,7 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
      * @see [getItemViewType]
      * @see [displayLoadStateAsItem]
      */
-    abstract fun onBindViewHolder(holder: VH, loadState: LoadState)
+    abstract fun onBindViewHolder(holder: VH, loadState: SLoadState)
 
     /**
      * Override this method to use different view types per LoadState.
@@ -116,7 +116,7 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
      *
      * By default, this LoadStateAdapter only uses a single view type.
      */
-    open fun getStateViewType(loadState: LoadState): Int = 0
+    open fun getStateViewType(loadState: SLoadState): Int = 0
 
     /**
      * Returns true if the LoadState should be displayed as a list item when active.
@@ -127,8 +127,8 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
      * 如果 LoadState 在激活时需要显示item，则返回 true。
      * 默认情况下，[LoadState.Loading] 和 [LoadState.Error] 将会显示，其他则不显示。
      */
-    open fun displayLoadStateAsItem(loadState: LoadState): Boolean {
-        return loadState is LoadState.Loading || loadState is LoadState.Error
+    open fun displayLoadStateAsItem(loadState: SLoadState): Boolean {
+        return loadState is SLoadState.Loading || loadState is SLoadState.Error
     }
 
     fun addLoadStateListener(listener: LoadStateListener) {
@@ -140,6 +140,6 @@ abstract class LoadStateAdapter<VH : RecyclerView.ViewHolder> : RecyclerView.Ada
     }
 
     fun interface LoadStateListener {
-        fun loadState(previousState: LoadState, currentState: LoadState)
+        fun loadState(previousState: SLoadState, currentState: SLoadState)
     }
 }

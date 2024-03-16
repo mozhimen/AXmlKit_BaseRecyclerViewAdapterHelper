@@ -7,8 +7,8 @@ import com.chad.baserecyclerviewadapterhelper.base.BaseViewBindingActivity
 import com.chad.baserecyclerviewadapterhelper.databinding.ActivityUniversalRecyclerBinding
 import com.chad.baserecyclerviewadapterhelper.entity.Movie
 import com.chad.library.adapter4.QuickAdapterHelper
-import com.chad.library.adapter4.loadState.LoadState
-import com.chad.library.adapter4.loadState.LoadState.NotLoading
+import com.chad.library.adapter4.loadState.SLoadState
+import com.chad.library.adapter4.loadState.SLoadState.NotLoading
 import com.chad.library.adapter4.loadState.leading.LeadingLoadStateAdapter.OnLeadingListener
 import java.util.*
 
@@ -67,7 +67,7 @@ class UpFetchUseActivity : BaseViewBindingActivity<ActivityUniversalRecyclerBind
          * When starting to request data from the network, set the status to loading.
          * 当开始网络请求数据的时候，设置状态为加载中
          */
-        helper.leadingLoadState = LoadState.Loading
+        helper.leadingLoadState = SLoadState.Loading
 
         /*
          * get data from internet.

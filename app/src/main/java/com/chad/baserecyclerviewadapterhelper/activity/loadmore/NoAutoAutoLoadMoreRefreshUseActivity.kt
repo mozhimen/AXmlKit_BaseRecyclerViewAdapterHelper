@@ -15,7 +15,7 @@ import com.chad.baserecyclerviewadapterhelper.databinding.ActivityLoadMoreBindin
 import com.chad.baserecyclerviewadapterhelper.entity.Status
 import com.chad.baserecyclerviewadapterhelper.utils.Tips
 import com.chad.library.adapter4.QuickAdapterHelper
-import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.SLoadState
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter.OnTrailingListener
 
 /**
@@ -144,14 +144,14 @@ class NoAutoAutoLoadMoreRefreshUseActivity : BaseViewBindingActivity<ActivityLoa
                     Set the status to not loaded, and there is no paging data.
                     设置状态为未加载，并且没有分页数据了
                      */
-                    helper.trailingLoadState = LoadState.NotLoading(true)
+                    helper.trailingLoadState = SLoadState.NotLoading(true)
                     Tips.show("no more data")
                 } else {
                     /*
                     Set the state to not loaded, and there is also paginated data
                     设置状态为未加载，并且还有分页数据
                     */
-                    helper.trailingLoadState = LoadState.NotLoading(false)
+                    helper.trailingLoadState = SLoadState.NotLoading(false)
                 }
 
                 // page加一
@@ -161,7 +161,7 @@ class NoAutoAutoLoadMoreRefreshUseActivity : BaseViewBindingActivity<ActivityLoa
             override fun fail(e: Exception) {
                 Tips.show(resources.getString(R.string.network_err))
                 viewBinding.refreshLayout.isRefreshing = false
-                helper.trailingLoadState = LoadState.Error(e)
+                helper.trailingLoadState = SLoadState.Error(e)
             }
         }).start()
     }

@@ -18,6 +18,9 @@ import com.mozhimen.xmlk.vhk.VHKLifecycle
  */
 @Keep
 open class BaseViewHolder(view: View) : VHKLifecycle(view) {
+    override val NAME: String
+        get() = this.javaClass.simpleName + itemViewType
+
     /**
      * Views indexed with their IDs
      */
@@ -120,6 +123,7 @@ open class BaseViewHolder(view: View) : VHKLifecycle(view) {
         return this
     }
 
-
+    fun getInfo():String =
+        "$NAME itemId ${this.itemId} itemViewType ${this.itemViewType} bindingAdapterPos ${this.bindingAdapterPosition} absoluteAdapterPos ${this.absoluteAdapterPosition} layoutPos ${this.layoutPosition} oldPos ${this.oldPosition} adapterPos ${this.adapterPosition} pos ${this.position} obj $"
 }
 

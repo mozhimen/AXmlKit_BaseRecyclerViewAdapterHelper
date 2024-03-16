@@ -436,6 +436,15 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
         return viewHolder.getViewOrNull(viewId)
     }
 
+    fun getPosition(viewHolder: VH): Int? {
+        var position = viewHolder.bindingAdapterPosition
+        if (position == RecyclerView.NO_POSITION) {
+            return null
+        }
+        position -= headerLayoutCount
+        return position
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -569,7 +578,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      */
     @CallSuper
     protected open fun onBindViewHolderInner(holder: VH, item: T) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $item")
+        Log.v(TAG, "onBindViewHolderInner: holder $holder item $item")
         holder.onBind()
     }
 
@@ -586,7 +595,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      * @param payloads payload info.
      */
     protected open fun onBindViewHolderInner(holder: VH, item: T, payloads: List<Any>) {
-        Log.d(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
+        Log.v(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
     }
 
     /**
@@ -1328,22 +1337,12 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
     protected open fun bindViewClickListener(viewHolder: VH, viewType: Int) {
         mOnItemClickListener?.let {
             viewHolder.itemView.setOnClickListener { v ->
-                var position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) {
-                    return@setOnClickListener
-                }
-                position -= headerLayoutCount
-                setOnItemClick(v, position)
+                setOnItemClick(v, getPosition(viewHolder) ?: return@setOnClickListener)
             }
         }
         mOnItemLongClickListener?.let {
             viewHolder.itemView.setOnLongClickListener { v ->
-                var position = viewHolder.bindingAdapterPosition
-                if (position == RecyclerView.NO_POSITION) {
-                    return@setOnLongClickListener false
-                }
-                position -= headerLayoutCount
-                setOnItemLongClick(v, position)
+                setOnItemLongClick(v, getPosition(viewHolder) ?: return@setOnLongClickListener false)
             }
         }
 
@@ -1354,12 +1353,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
                         childView.isClickable = true
                     }
                     childView.setOnClickListener { v ->
-                        var position = viewHolder.bindingAdapterPosition
-                        if (position == RecyclerView.NO_POSITION) {
-                            return@setOnClickListener
-                        }
-                        position -= headerLayoutCount
-                        setOnItemChildClick(v, position)
+                        setOnItemChildClick(v, getPosition(viewHolder) ?: return@setOnClickListener)
                     }
                 }
             }
@@ -1371,12 +1365,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
                         childView.isLongClickable = true
                     }
                     childView.setOnLongClickListener { v ->
-                        var position = viewHolder.bindingAdapterPosition
-                        if (position == RecyclerView.NO_POSITION) {
-                            return@setOnLongClickListener false
-                        }
-                        position -= headerLayoutCount
-                        setOnItemChildLongClick(v, position)
+                        setOnItemChildLongClick(v, getPosition(viewHolder) ?: return@setOnLongClickListener false)
                     }
                 }
             }
