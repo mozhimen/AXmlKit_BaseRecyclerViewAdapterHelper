@@ -10,7 +10,6 @@ import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.xmlk.vhk.VHKLifecycle
 
 /**
@@ -39,14 +38,14 @@ open class BaseViewHolder(view: View) : VHKLifecycle(view) {
     open fun <B : ViewDataBinding> getBinding(): B? = DataBindingUtil.getBinding(itemView)
 
 
-    open fun <T : View> getView(@IdRes viewId: Int): T {
-        val view = getViewOrNull<T>(viewId)
+    open fun <T : View> findViewById(@IdRes viewId: Int): T {
+        val view = findViewByIdOrNull<T>(viewId)
         checkNotNull(view) { "No view found with id $viewId" }
         return view
     }
 
     @Suppress("UNCHECKED_CAST")
-    open fun <T : View> getViewOrNull(@IdRes viewId: Int): T? {
+    open fun <T : View> findViewByIdOrNull(@IdRes viewId: Int): T? {
         val view = views.get(viewId)
         if (view == null) {
             itemView.findViewById<T>(viewId)?.let {
@@ -62,64 +61,64 @@ open class BaseViewHolder(view: View) : VHKLifecycle(view) {
     }
 
     open fun setText(@IdRes viewId: Int, value: CharSequence?): BaseViewHolder {
-        getView<TextView>(viewId).text = value
+        findViewById<TextView>(viewId).text = value
         return this
     }
 
     open fun setText(@IdRes viewId: Int, @StringRes strId: Int): BaseViewHolder? {
-        getView<TextView>(viewId).setText(strId)
+        findViewById<TextView>(viewId).setText(strId)
         return this
     }
 
     open fun setTextColor(@IdRes viewId: Int, @ColorInt color: Int): BaseViewHolder {
-        getView<TextView>(viewId).setTextColor(color)
+        findViewById<TextView>(viewId).setTextColor(color)
         return this
     }
 
     open fun setTextColorRes(@IdRes viewId: Int, @ColorRes colorRes: Int): BaseViewHolder {
-        getView<TextView>(viewId).setTextColor(ContextCompat.getColor(itemView.context, colorRes))
+        findViewById<TextView>(viewId).setTextColor(ContextCompat.getColor(itemView.context, colorRes))
         return this
     }
 
     open fun setImageResource(@IdRes viewId: Int, @DrawableRes imageResId: Int): BaseViewHolder {
-        getView<ImageView>(viewId).setImageResource(imageResId)
+        findViewById<ImageView>(viewId).setImageResource(imageResId)
         return this
     }
 
     open fun setImageDrawable(@IdRes viewId: Int, drawable: Drawable?): BaseViewHolder {
-        getView<ImageView>(viewId).setImageDrawable(drawable)
+        findViewById<ImageView>(viewId).setImageDrawable(drawable)
         return this
     }
 
     open fun setImageBitmap(@IdRes viewId: Int, bitmap: Bitmap?): BaseViewHolder {
-        getView<ImageView>(viewId).setImageBitmap(bitmap)
+        findViewById<ImageView>(viewId).setImageBitmap(bitmap)
         return this
     }
 
     open fun setBackgroundColor(@IdRes viewId: Int, @ColorInt color: Int): BaseViewHolder {
-        getView<View>(viewId).setBackgroundColor(color)
+        findViewById<View>(viewId).setBackgroundColor(color)
         return this
     }
 
     open fun setBackgroundResource(@IdRes viewId: Int, @DrawableRes backgroundRes: Int): BaseViewHolder {
-        getView<View>(viewId).setBackgroundResource(backgroundRes)
+        findViewById<View>(viewId).setBackgroundResource(backgroundRes)
         return this
     }
 
     open fun setVisible(@IdRes viewId: Int, isVisible: Boolean): BaseViewHolder {
-        val view = getView<View>(viewId)
+        val view = findViewById<View>(viewId)
         view.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
         return this
     }
 
     open fun setGone(@IdRes viewId: Int, isGone: Boolean): BaseViewHolder {
-        val view = getView<View>(viewId)
+        val view = findViewById<View>(viewId)
         view.visibility = if (isGone) View.GONE else View.VISIBLE
         return this
     }
 
     open fun setEnabled(@IdRes viewId: Int, isEnabled: Boolean): BaseViewHolder {
-        getView<View>(viewId).isEnabled = isEnabled
+        findViewById<View>(viewId).isEnabled = isEnabled
         return this
     }
 

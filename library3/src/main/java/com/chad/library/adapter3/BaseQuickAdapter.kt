@@ -433,7 +433,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
         val recyclerView = recyclerViewOrNull ?: return null
         val viewHolder = recyclerView.findViewHolderForLayoutPosition(position) as BaseViewHolder?
             ?: return null
-        return viewHolder.getViewOrNull(viewId)
+        return viewHolder.findViewByIdOrNull(viewId)
     }
 
     fun getPosition(viewHolder: VH): Int? {
