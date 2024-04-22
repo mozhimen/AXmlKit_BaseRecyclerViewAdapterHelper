@@ -59,11 +59,7 @@ class HomeActivity : AppCompatActivity() {
         get() = arrayListOf(
             HomeEntity(sectionTitle = "BaseQuickAdapter 基础功能"),
             HomeEntity("Animation", AnimationUseActivity::class.java, R.mipmap.gv_animation),
-            HomeEntity(
-                "Header/Footer",
-                HeaderAndFooterUseActivity::class.java,
-                R.mipmap.gv_header_and_footer
-            ),
+            HomeEntity("Header/Footer", HeaderAndFooterUseActivity::class.java, R.mipmap.gv_header_and_footer),
             HomeEntity("EmptyView", EmptyViewUseActivity::class.java, R.mipmap.gv_empty),
             HomeEntity("ItemClick", ItemClickActivity::class.java, R.mipmap.gv_item_click),
             HomeEntity("DataBinding", DataBindingUseActivity::class.java, R.mipmap.gv_databinding),
