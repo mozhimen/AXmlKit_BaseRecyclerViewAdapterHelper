@@ -2,6 +2,7 @@ package com.chad.library.adapter3.provider
 
 import android.content.Context
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
@@ -76,7 +77,7 @@ abstract class BaseItemProvider<T> : IUtilK {
 
     @CallSuper
     open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int?) {
-        Log.v(TAG, "onBindViewHolder:         $holder position $position item $item")
+        UtilKLogWrapper.v(TAG, "onBindViewHolder:         $holder position $position item $item")
         holder.onBind()
     }
 
@@ -103,7 +104,7 @@ abstract class BaseItemProvider<T> : IUtilK {
      */
     @CallSuper
     open fun onViewAttachedToWindow(holder: BaseViewHolder, item: T?, position: Int?) {
-        Log.v(TAG, "onViewAttachedToWindow:   $holder position $position item $item")
+        UtilKLogWrapper.v(TAG, "onViewAttachedToWindow:   $holder position $position item $item")
         holder.onViewAttachedToWindow()
     }
 
@@ -120,13 +121,13 @@ abstract class BaseItemProvider<T> : IUtilK {
      */
     @CallSuper
     open fun onViewDetachedFromWindow(holder: BaseViewHolder, item: T?, position: Int?) {
-        Log.v(TAG, "onViewDetachedFromWindow: $holder position $position item $item")
+        UtilKLogWrapper.v(TAG, "onViewDetachedFromWindow: $holder position $position item $item")
         holder.onViewDetachedFromWindow()
     }
 
     @CallSuper
     open fun onViewRecycled(holder: BaseViewHolder, item: T?, position: Int?) {
-        Log.v(TAG, "onViewRecycled:           $holder position $position item $item")
+        UtilKLogWrapper.v(TAG, "onViewRecycled:           $holder position $position item $item")
         holder.onViewRecycled()
     }
 

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +51,7 @@ class DefaultDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRec
         val listener: OnItemDragListener = object : OnItemDragListener {
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
                 vibrate()
-                Log.d(TAG, "drag start")
+                UtilKLogWrapper.d(TAG, "drag start")
                 val holder = viewHolder as QuickViewHolder? ?: return
                 // 开始时，item背景色变化，demo这里使用了一个动画渐变，使得自然
                 val startColor = Color.WHITE
@@ -73,14 +74,14 @@ class DefaultDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRec
                 target: RecyclerView.ViewHolder,
                 to: Int
             ) {
-                Log.d(
+                UtilKLogWrapper.d(
                     TAG,
                     "move from: " + source.bindingAdapterPosition + " to: " + target.bindingAdapterPosition
                 )
             }
 
             override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
-                Log.d(TAG, "drag end")
+                UtilKLogWrapper.d(TAG, "drag end")
                 val holder = viewHolder as QuickViewHolder
                 // 结束时，item背景色变化，demo这里使用了一个动画渐变，使得自然
                 val startColor = Color.rgb(245, 245, 245)
@@ -97,7 +98,7 @@ class DefaultDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRec
                 }
 
                 mAdapter.items.forEach {
-                    Log.d(
+                    UtilKLogWrapper.d(
                         TAG,
                         "-------->> w 顺序 ${it} "
                     )
@@ -107,15 +108,15 @@ class DefaultDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRec
         }
         val swipeListener: OnItemSwipeListener = object : OnItemSwipeListener {
             override fun onItemSwipeStart(viewHolder: RecyclerView.ViewHolder?, bindingAdapterPosition: Int) {
-                Log.d(TAG, "onItemSwipeStart")
+                UtilKLogWrapper.d(TAG, "onItemSwipeStart")
             }
 
             override fun onItemSwipeEnd(viewHolder: RecyclerView.ViewHolder, bindingAdapterPosition: Int) {
-                Log.d(TAG, "onItemSwipeEnd")
+                UtilKLogWrapper.d(TAG, "onItemSwipeEnd")
             }
 
             override fun onItemSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, bindingAdapterPosition: Int) {
-                Log.d(TAG, "onItemSwiped")
+                UtilKLogWrapper.d(TAG, "onItemSwiped")
             }
 
             override fun onItemSwipeMoving(
@@ -125,7 +126,7 @@ class DefaultDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRec
                 dY: Float,
                 isCurrentlyActive: Boolean
             ) {
-                Log.d(TAG, "onItemSwipeMoving")
+                UtilKLogWrapper.d(TAG, "onItemSwipeMoving")
             }
         }
 

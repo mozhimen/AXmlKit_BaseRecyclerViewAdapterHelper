@@ -3,6 +3,7 @@ package com.chad.library.adapter3
 import android.animation.Animator
 import android.content.Context
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -578,7 +579,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      */
     @CallSuper
     protected open fun onBindViewHolderInner(holder: VH, item: T) {
-        Log.v(TAG, "onBindViewHolderInner: holder $holder item $item")
+        UtilKLogWrapper.v(TAG, "onBindViewHolderInner: holder $holder item $item")
         holder.onBind()
     }
 
@@ -595,7 +596,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      * @param payloads payload info.
      */
     protected open fun onBindViewHolderInner(holder: VH, item: T, payloads: List<Any>) {
-        Log.v(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
+        UtilKLogWrapper.v(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
     }
 
     /**
@@ -1125,7 +1126,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
             return
         }
         this.data[index] = data
-        Log.d("BaseQuickAdapter>>>>>", "setData: $payload")
+        UtilKLogWrapper.d("BaseQuickAdapter>>>>>", "setData: $payload")
         notifyItemChanged(index + headerLayoutCount, payload)
     }
 
@@ -1138,7 +1139,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      */
     open fun addData(@IntRange(from = 0) position: Int, data: T) {
         this.data.add(position, data)
-        Log.d(TAG, "addData: ${this.data.size}")
+        UtilKLogWrapper.d(TAG, "addData: ${this.data.size}")
         notifyItemInserted(position + headerLayoutCount)
         compatibilityDataSizeChanged(1)
     }

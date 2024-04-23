@@ -2,6 +2,7 @@ package com.chad.library.adapter3
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup

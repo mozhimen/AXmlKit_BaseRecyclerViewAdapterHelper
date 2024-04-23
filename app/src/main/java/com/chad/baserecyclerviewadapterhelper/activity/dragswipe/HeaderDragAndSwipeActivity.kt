@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.baserecyclerviewadapterhelper.activity.dragswipe.adapter.HeaderDragAndSwipeAdapter
@@ -86,7 +87,7 @@ class HeaderDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRecy
             .setDataCallback(mAdapter)
             .setItemDragListener(
                 onItemDragStart = { viewHolder, pos ->
-                    Log.d(TAG, "drag start")
+                    UtilKLogWrapper.d(TAG, "drag start")
                     vibrate()
                     val holder = viewHolder as QuickViewHolder
                     // 开始时，item背景色变化，demo这里使用了一个动画渐变，使得自然
@@ -105,10 +106,10 @@ class HeaderDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRecy
                     }
                 },
                 onItemDragMoving = { source, from, target, to ->
-                    Log.d(TAG, "move from: $from  to:  $to")
+                    UtilKLogWrapper.d(TAG, "move from: $from  to:  $to")
                 },
                 onItemDragEnd = { viewHolder, pos ->
-                    Log.d(TAG, "drag end")
+                    UtilKLogWrapper.d(TAG, "drag end")
                     val holder = viewHolder as QuickViewHolder
                     // 结束时，item背景色变化，demo这里使用了一个动画渐变，使得自然
                     val startColor = Color.rgb(245, 245, 245)
@@ -129,16 +130,16 @@ class HeaderDragAndSwipeActivity : BaseViewBindingActivity<ActivityUniversalRecy
             )
             .setItemSwipeListener(
                 onItemSwipeStart = { viewHolder, pos ->
-                    Log.d(TAG, "onItemSwipeStart")
+                    UtilKLogWrapper.d(TAG, "onItemSwipeStart")
                 },
                 onItemSwipeMoving = { canvas, viewHolder, dX, dY, isCurrentlyActive ->
-                    Log.d(TAG, "onItemSwipeMoving")
+                    UtilKLogWrapper.d(TAG, "onItemSwipeMoving")
                 },
                 onItemSwiped = { viewHolder, _, pos ->
-                    Log.d(TAG, "onItemSwiped")
+                    UtilKLogWrapper.d(TAG, "onItemSwiped")
                 },
                 onItemSwipeEnd = { viewHolder, pos ->
-                    Log.d(TAG, "onItemSwipeEnd")
+                    UtilKLogWrapper.d(TAG, "onItemSwipeEnd")
                 }
             )
         viewBinding.rv.adapter = helper.adapter
