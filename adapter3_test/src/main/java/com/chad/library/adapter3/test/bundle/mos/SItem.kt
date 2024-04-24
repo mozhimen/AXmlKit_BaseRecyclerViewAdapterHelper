@@ -1,4 +1,4 @@
-package com.chad.library.adapter3.test
+package com.chad.library.adapter3.test.bundle.mos
 
 /**
  * @ClassName ProgressBean

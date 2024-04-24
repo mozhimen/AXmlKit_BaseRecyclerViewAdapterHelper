@@ -1,7 +1,9 @@
-package com.chad.library.adapter3.test
+package com.chad.library.adapter3.test.bundle.items
 
 import android.widget.TextView
 import com.chad.library.adapter3.provider.BaseItemProvider
+import com.chad.library.adapter3.test.R
+import com.chad.library.adapter3.test.bundle.mos.SItem
 import com.chad.library.adapter3.viewholder.BaseViewHolder
 
 /**
@@ -20,7 +22,7 @@ class NormalProvider : BaseItemProvider<SItem>() {
     override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int?) {
         super.onBindViewHolder(holder, item, position)
         if (item is SItem.Normal) {
-            holder.getView<TextView>(R.id.item_txt).text = item.text
+            holder.findViewById<TextView>(R.id.item_txt).text = item.text
         }
     }
 }

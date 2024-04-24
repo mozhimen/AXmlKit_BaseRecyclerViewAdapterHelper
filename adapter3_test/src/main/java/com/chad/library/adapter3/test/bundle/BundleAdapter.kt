@@ -1,6 +1,10 @@
-package com.chad.library.adapter3.test
+package com.chad.library.adapter3.test.bundle
 
 import com.chad.library.adapter3.BaseProviderMultiAdapter
+import com.chad.library.adapter3.test.bundle.items.HeaderProvider
+import com.chad.library.adapter3.test.bundle.items.NormalProvider
+import com.chad.library.adapter3.test.bundle.items.ProgressProvider
+import com.chad.library.adapter3.test.bundle.mos.SItem
 
 /**
  * @ClassName MainAdapter
@@ -9,7 +13,7 @@ import com.chad.library.adapter3.BaseProviderMultiAdapter
  * @Date 2024/2/27 0:21
  * @Version 1.0
  */
-class MainAdapter : BaseProviderMultiAdapter<SItem>() {
+class BundleAdapter : BaseProviderMultiAdapter<SItem>() {
     init {
         addItemProvider(ProgressProvider())
         addItemProvider(NormalProvider())
