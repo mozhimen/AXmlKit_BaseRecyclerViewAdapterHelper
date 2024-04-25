@@ -20,6 +20,10 @@
         <activity
             android:name=".bundle.BundleActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".anim.AnimActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

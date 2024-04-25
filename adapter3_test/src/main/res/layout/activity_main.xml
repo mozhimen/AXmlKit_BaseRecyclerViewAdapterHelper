@@ -11,6 +11,12 @@
 
         <Button
             style="@style/StyleK_Btn"
+            android:onClick="goAnim"
+            android:text="goAnim"
+            tools:ignore="HardcodedText,UsingOnClickInXml" />
+
+        <Button
+            style="@style/StyleK_Btn"
             android:onClick="goBundle"
             android:text="goBundle"
             tools:ignore="HardcodedText,UsingOnClickInXml" />
