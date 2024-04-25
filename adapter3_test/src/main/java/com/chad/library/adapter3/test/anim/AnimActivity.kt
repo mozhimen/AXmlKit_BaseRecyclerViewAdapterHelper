@@ -1,12 +1,7 @@
 package com.chad.library.adapter3.test.anim
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter3.test.R
 import com.chad.library.adapter3.test.anim.commons.IExpandable
 import com.chad.library.adapter3.test.databinding.ActivityAnimBinding
-import com.mozhimen.basick.animk.builder.utils.AnimKBuilderUtil
-import com.mozhimen.basick.animk.builder.utils.AnimKUtil
-import com.mozhimen.basick.elemk.android.animation.BaseViewHolderAnimatorListenerAdapter
+import com.mozhimen.basick.animk.builder.mos.MAnimKConfig
+import com.mozhimen.basick.animk.builder.utils.AnimKTypeUtil
 import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
+import com.mozhimen.basick.utilk.android.view.applyGone
+import com.mozhimen.xmlk.vhk.utils.VHKAnimUtil
 
 /**
  * @ClassName AnimActivity
@@ -32,53 +28,50 @@ import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivi
  */
 class AnimActivity : BaseActivityVDB<ActivityAnimBinding>() {
 
+    private val _expandList: ArrayList<AnimBundle> = ArrayList() //缓存的数据
+    private val _isExpandOnlyOne = false
+    private var _animDuration: Long = 300
+
     override fun initView(savedInstanceState: Bundle?) {
+        repeat(20) {
+            _expandList.add(AnimBundle(false))
+        }
+
         vdb.mainRecycler.apply {
             layoutManager = LinearLayoutManager(this@AnimActivity)
-
-            //清空记录展开还是关闭的缓存数据
-            resetExpanedList()
-
-            adapter = MyAdapter()
+            adapter = AnimRecyclerViewAdapter(_expandList)
         }
     }
 
-    inner class MyAdapter : RecyclerView.Adapter<ViewHolder>() {
+    inner class AnimRecyclerViewAdapter(private val _list: List<AnimBundle>) : RecyclerView.Adapter<AnimViewHolder>() {
 
-        val keepOne: KeepOneHolder by lazy { KeepOneHolder() }
+        private val _panelAnimProxy: PanelAnimProxy by lazy { PanelAnimProxy() }
 
-        override fun getItemCount(): Int {
-            return 20
-        }
+        override fun getItemCount(): Int =
+            _list.size
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view: View = LayoutInflater.from(this@AnimActivity).inflate(R.layout.item_user_concern_layout, parent, false)
-            return ViewHolder(view)
-        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimViewHolder =
+            AnimViewHolder(LayoutInflater.from(this@AnimActivity).inflate(R.layout.item_user_concern_layout, parent, false))
 
         @SuppressLint("SetTextI18n")
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: AnimViewHolder, position: Int) {
             holder.tvTitle.setText("中美经贸磋商 po=$position")
 
-            keepOne.bind(holder, position)
+            _panelAnimProxy.onBindViewHolder(holder, _list[position].isExpand)
 
-            holder.tvTitle.setOnClickListener(
-                View.OnClickListener { //                    if(ExpandableViewHoldersUtil.isExpaned(position)){
-                    //                        viewHolder.contentTv.setMaxLines(3);
-                    //                    }else {
-                    //                        viewHolder.contentTv.setMaxLines(100);
-                    //                    }
-                    keepOne.toggle(holder)
-                })
+            holder.tvTitle.setOnClickListener {
+                _list[position].isExpand = !_list[position].isExpand
+                _panelAnimProxy.onGenerateViewHolder(holder, _list[position].isExpand)
+            }
 
-            holder.lvArrorwBtn.setOnClickListener(
-                View.OnClickListener {
-                    keepOne.toggle(holder)
-                })
+            holder.lvArrorwBtn.setOnClickListener {
+                _list[position].isExpand = !_list[position].isExpand
+                _panelAnimProxy.onGenerateViewHolder(holder, _list[position].isExpand)
+            }
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), IExpandable {
+    inner class AnimViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), IExpandable {
 
         var tvTitle: TextView = itemView.findViewById<TextView>(R.id.item_user_concern_title)
         var arrowImage: ImageView = itemView.findViewById<ImageView>(R.id.item_user_concern_arrow_image)
@@ -87,7 +80,7 @@ class AnimActivity : BaseActivityVDB<ActivityAnimBinding>() {
         var contentTv: TextView = itemView.findViewById<TextView>(R.id.item_user_concern_link_text)
 
         init {
-            lvLinearlayout.visibility = View.GONE
+            lvLinearlayout.applyGone()
             lvLinearlayout.alpha = 0f
         }
 
@@ -95,134 +88,51 @@ class AnimActivity : BaseActivityVDB<ActivityAnimBinding>() {
             return lvLinearlayout
         }
 
-        override fun onAnimStart(isOpen: Boolean) {
-            if (isOpen) {
-                AnimKBuilderUtil.get_ofRotate(arrowImage, 180f, 0f).setDuration(animalDuration).build().start()
+        override fun onAnimStart(isExpand: Boolean) {
+            if (isExpand) {
+                AnimKTypeUtil.get_ofRotate(arrowImage, 0f, 180f).build(MAnimKConfig(duration = _animDuration)).start()
+                VHKAnimUtil.expandViewHolder(this, this.getExpandView(), true)
             } else {
-                AnimKBuilderUtil.get_ofRotate(arrowImage, 0f, 180f).setDuration(animalDuration).build().start()
+                AnimKTypeUtil.get_ofRotate(arrowImage, 180f, 0f).build(MAnimKConfig(duration = _animDuration)).start()
+                VHKAnimUtil.foldViewHolder(this, getExpandView(), true)
             }
         }
     }
 
-    private val needExplanedOnlyOne = false
-    private val explanedList: ArrayList<String> = ArrayList() //缓存的数据
-
-    //-1表示所有item是关闭状态，opend为pos值的表示pos位置的item为展开的状态
-    private var opened = -1
-    fun resetExpanedList() {
-        explanedList.clear()
-    }
-
     @Suppress("deprecation")
-    inner class KeepOneHolder {
-        var preOpen: Int = 0
+    inner class PanelAnimProxy {
+        var _lastExpandPos: Int = 0
 
         /**
          * 此方法是在Adapter的onBindViewHolder()方法中调用
-         * @param holder holder对象
-         * @param pos    下标
          */
-        fun bind(holder: ViewHolder, pos: Int) {
-            if (explanedList.contains(pos.toString() + "")) {
-                openHolder(holder, holder!!.getExpandView(), false)
+        fun onBindViewHolder(holder: AnimViewHolder, isExpand: Boolean) {
+            if (isExpand) {
+                VHKAnimUtil.expandViewHolder(holder, holder.getExpandView(), false)
             } else {
-                closeHolder(holder, holder!!.getExpandView(), false)
+                VHKAnimUtil.foldViewHolder(holder, holder.getExpandView(), false)
             }
         }
 
         /**
          * 响应ViewHolder的点击事件
-         * @param holder holder对象
          */
-        fun toggle(holder: ViewHolder) {
+        fun onGenerateViewHolder(holder: AnimViewHolder, isExpand: Boolean) {
             val position = holder.position
-            if (explanedList.contains(position.toString() + "")) {
-                opened = -1
-                deletePositionInExpaned(position)
-
+            if (isExpand) {
                 holder.onAnimStart(true)
-                closeHolder(holder, holder.getExpandView(), true)
-            } else {
-                preOpen = opened
-                opened = position
-
-                addPositionInExpaned(position)
-                holder.onAnimStart(false)
-                openHolder(holder, holder.getExpandView(), true)
 
                 //是否要关闭上一个
-                if (needExplanedOnlyOne && preOpen != position) {
-                    val oldHolder = (holder.itemView.parent as RecyclerView).findViewHolderForPosition(preOpen) as ViewHolder
-                    if (oldHolder != null) {
-                        Log.e("KeepOneHolder", "oldHolder != null")
-                        closeHolder(oldHolder, oldHolder.getExpandView(), true)
-                        deletePositionInExpaned(preOpen)
-                    }
+                if (_isExpandOnlyOne && _lastExpandPos != position) {
+                    ((holder.itemView.parent as RecyclerView).findViewHolderForPosition(_lastExpandPos) as? AnimViewHolder?)?.onAnimStart(false)
                 }
+
+                _lastExpandPos = position
+            } else {
+                holder.onAnimStart(false)
             }
         }
     }
 
-    var animalDuration: Long = 300
-    var alphaDuration: Long = 100
-
-    fun isExpaned(index: Int): Boolean {
-        return explanedList.contains(index.toString() + "")
-    }
-
-    private fun addPositionInExpaned(pos: Int) {
-        if (!explanedList.contains(pos.toString() + "")) {
-            explanedList.add(pos.toString() + "")
-        }
-    }
-
-    private fun deletePositionInExpaned(pos: Int) {
-        //remove Object 直接写int，会变成index,造成数组越界
-        explanedList.remove(pos.toString() + "")
-    }
-
-    //参数介绍：1、holder对象 2、展开部分的View，由holder.getExpandView()方法获取 3、animate参数为true，则有动画效果
-    private fun openHolder(holder: RecyclerView.ViewHolder, expandView: View, animate: Boolean) {
-        if (animate) {
-            expandView.visibility = View.VISIBLE
-            //改变高度的动画
-            val animator = AnimKUtil.get_ofHeight_viewHolder(holder)
-
-            //扩展的动画，透明度动画开始
-            val alphaAnimator = ObjectAnimator.ofFloat(expandView, View.ALPHA, 1f)
-            alphaAnimator.setDuration(animalDuration + alphaDuration)
-            alphaAnimator.addListener(BaseViewHolderAnimatorListenerAdapter(holder))
-
-            val animatorSet = AnimatorSet()
-            animatorSet.playTogether(animator, alphaAnimator)
-            animatorSet.start()
-        } else { //为false时直接显示
-            expandView.visibility = View.VISIBLE
-            expandView.alpha = 1f
-        }
-    }
-
-    //类似于打开的方法
-    private fun closeHolder(holder: RecyclerView.ViewHolder, expandView: View, animate: Boolean) {
-        if (animate) {
-            expandView.visibility = View.GONE
-            val animator = AnimKUtil.get_ofHeight_viewHolder(holder)
-            expandView.visibility = View.VISIBLE
-            animator.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    expandView.visibility = View.GONE
-                    expandView.alpha = 0f
-                }
-
-                override fun onAnimationCancel(animation: Animator) {
-                    expandView.visibility = View.GONE
-                    expandView.alpha = 0f
-                }
-            })
-            animator.start()
-        } else {
-            expandView.visibility = View.GONE
-            expandView.alpha = 0f
-        }
-    }
+    data class AnimBundle(var isExpand: Boolean)
 }

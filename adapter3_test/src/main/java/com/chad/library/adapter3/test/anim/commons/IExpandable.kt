@@ -12,5 +12,5 @@ import android.view.View
 interface IExpandable {
     fun getExpandView(): View?
 
-    fun onAnimStart(isOpen: Boolean)
+    fun onAnimStart(isExpand: Boolean)
 }
