@@ -53,6 +53,10 @@ android {
 
 
 dependencies {
+    implementation(project(":SwiftKit:basick"))
+    implementation(project(":SwiftKit:xmlk"))
+    implementation(project(":AXmlKit:vhk"))
+
     implementation("androidx.annotation:annotation:1.6.0")
 
     implementation("androidx.recyclerview:recyclerview:1.3.0")

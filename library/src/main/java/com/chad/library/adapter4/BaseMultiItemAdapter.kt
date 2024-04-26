@@ -25,13 +25,13 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
         val listener = typeViewHolders.get(viewType)
             ?: throw IllegalArgumentException("ViewType: $viewType not found onViewHolderListener，please use addItemType() first!")
 
-        return listener.onCreate(parent.context, parent, viewType).apply {
+        return listener.onCreateViewHolder(parent.context, parent, viewType).apply {
             itemView.setTag(R.id.BaseQuickAdapter_key_multi, listener)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: T?) {
-        findListener(holder)?.onBind(holder, position, item)
+        findListener(holder)?.onBindViewHolder(holder, item, position)
     }
 
     override fun onBindViewHolder(
@@ -42,7 +42,7 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
             return
         }
 
-        findListener(holder)?.onBind(holder, position, item, payloads)
+        findListener(holder)?.onBindViewHolder(holder, item, position, payloads)
     }
 
     /**
@@ -79,17 +79,22 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         super.onViewAttachedToWindow(holder)
 
-        findListener(holder)?.onViewAttachedToWindow(holder)
+        val position = getPosition(holder)
+        findListener(holder)?.onViewAttachedToWindow(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        findListener(holder)?.onViewDetachedFromWindow(holder)
+
+        val position = getPosition(holder)
+        findListener(holder)?.onViewDetachedFromWindow(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
-        findListener(holder)?.onViewRecycled(holder)
+
+        val position = getPosition(holder)
+        findListener(holder)?.onViewRecycled(holder, position?.let { getItem(it) }, position)
     }
 
     override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean {
@@ -101,8 +106,8 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
                 (typeViewHolders.get(itemType)?.isFullSpanItem(itemType) == true)
     }
 
-    private fun findListener(holder: RecyclerView.ViewHolder) : OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>? {
-       return holder.itemView.getTag(R.id.BaseQuickAdapter_key_multi) as? OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>
+    private fun findListener(holder: RecyclerView.ViewHolder): OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>? {
+        return holder.itemView.getTag(R.id.BaseQuickAdapter_key_multi) as? OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>
     }
 
     /**
@@ -112,21 +117,21 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
      * @param V ViewHolder 类型
      */
     interface OnMultiItemAdapterListener<T, V : RecyclerView.ViewHolder> {
-        fun onCreate(context: Context, parent: ViewGroup, viewType: Int): V
+        fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): V
 
-        fun onBind(holder: V, position: Int, item: T?)
+        fun onBindViewHolder(holder: V, item: T?, position: Int)
 
-        fun onBind(holder: V, position: Int, item: T?, payloads: List<Any>) {
-            onBind(holder, position, item)
+        fun onBindViewHolder(holder: V, item: T?, position: Int, payloads: List<Any>) {
+            onBindViewHolder(holder, item, position)
         }
 
-        fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {}
+        fun onViewAttachedToWindow(holder: V, item: T?, position: Int?) {}
 
-        fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {}
+        fun onViewDetachedFromWindow(holder: V, item: T?, position: Int?) {}
 
-        fun onViewRecycled(holder: RecyclerView.ViewHolder) {}
+        fun onViewRecycled(holder: V, item: T?, position: Int?) {}
 
-        fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean = false
+        fun onFailedToRecycleView(holder: V): Boolean = false
 
         fun isFullSpanItem(itemType: Int): Boolean {
             return false

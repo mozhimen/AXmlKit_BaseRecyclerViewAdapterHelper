@@ -11,6 +11,9 @@ import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.animation.AlphaInAnimation
 import com.chad.library.adapter4.animation.ItemAnimator
@@ -20,6 +23,7 @@ import com.chad.library.adapter4.animation.SlideInLeftAnimation
 import com.chad.library.adapter4.animation.SlideInRightAnimation
 import com.chad.library.adapter4.util.asStaggeredGridFullSpan
 import com.chad.library.adapter4.viewholder.StateLayoutVH
+import com.mozhimen.basick.utilk.commons.IUtilK
 import java.util.Collections
 
 /**
@@ -28,10 +32,21 @@ import java.util.Collections
  * @param VH : BaseViewHolder
  * @constructor layoutId, data(Can null parameters, the default is empty data)
  */
-abstract class BaseQuickAdapter<T : Any, VH : RecyclerView.ViewHolder>(
+ class BaseQuickAdapter<T : Any, VH : RecyclerView.ViewHolder>(
     open var items: List<T> = emptyList()
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), LifecycleOwner, IUtilK {
 
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
+
+    private var _lifecycleRegistry: LifecycleRegistry? = null
+
+    val lifecycleRegistry: LifecycleRegistry
+        get() = _lifecycleRegistry ?: LifecycleRegistry(this).also {
+            _lifecycleRegistry = it
+        }
+
+    //////////////////////////////////////////////////////////////////////////////////////
 
     /********************************* Private property *****************************************/
     private var mLastPosition = -1
@@ -186,6 +201,14 @@ abstract class BaseQuickAdapter<T : Any, VH : RecyclerView.ViewHolder>(
      */
     protected open fun onBindViewHolder(holder: VH, position: Int, item: T?, payloads: List<Any>) {
         onBindViewHolder(holder, position, item)
+    }
+
+    fun getPosition(viewHolder: VH): Int? {
+        val position = viewHolder.bindingAdapterPosition
+        if (position == RecyclerView.NO_POSITION) {
+            return null
+        }
+        return position
     }
 
     /**
@@ -420,7 +443,8 @@ abstract class BaseQuickAdapter<T : Any, VH : RecyclerView.ViewHolder>(
      * data set.
      * @return The data at the specified position.
      */
-    fun getItem(@IntRange(from = 0) position: Int): T? = items.getOrNull(position)
+    fun getItem(@IntRange(from = 0) position: Int): T? =
+        items.getOrNull(position)
 
     /**
      * 获取对应首个匹配的 item 数据的索引。如果返回 -1，表示不存在
