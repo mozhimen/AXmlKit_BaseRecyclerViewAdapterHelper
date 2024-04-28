@@ -54,13 +54,13 @@ abstract class BaseMultiItemAdapter<T : Any, VH : VHKLifecycle>(items: List<T> =
      * @param listener Int
      */
     fun addItemType(
-        itemViewType: Int, listener: OnMultiItemAdapterListener<T, VH>
+        listener: OnMultiItemAdapterListener<T, VH>
     ) = apply {
         if (listener is OnMultiItem) {
             listener.weakA = WeakReference(this)
         }
         typeViewHolders.put(
-            itemViewType, listener as OnMultiItemAdapterListener<T, VH>
+            listener.itemViewType, listener as OnMultiItemAdapterListener<T, VH>
         )
     }
 
@@ -119,6 +119,8 @@ abstract class BaseMultiItemAdapter<T : Any, VH : VHKLifecycle>(items: List<T> =
      * @param V ViewHolder 类型
      */
     interface OnMultiItemAdapterListener<T, VH> {
+        val itemViewType: Int
+
         fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH
 
         fun onBindViewHolder(holder: VH, item: T?, position: Int)
@@ -150,9 +152,9 @@ abstract class BaseMultiItemAdapter<T : Any, VH : VHKLifecycle>(items: List<T> =
      */
     abstract class OnMultiItem<T : Any, VH : VHKLifecycle> :
         OnMultiItemAdapterListener<T, VH> {
-        internal var weakA: WeakReference<BaseMultiItemAdapter<T,VH>>? = null
+        internal var weakA: WeakReference<BaseMultiItemAdapter<T, VH>>? = null
 
-        val adapter: BaseMultiItemAdapter<T,VH>?
+        val adapter: BaseMultiItemAdapter<T, VH>?
             get() = weakA?.get()
 
         val context: Context?

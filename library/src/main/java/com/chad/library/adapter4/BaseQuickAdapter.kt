@@ -176,7 +176,6 @@ abstract class BaseQuickAdapter<T : Any, VH : VHKLifecycle>(
             field = value
         }
 
-
     protected abstract fun onCreateViewHolder(
         context: Context, parent: ViewGroup, viewType: Int
     ): VH
