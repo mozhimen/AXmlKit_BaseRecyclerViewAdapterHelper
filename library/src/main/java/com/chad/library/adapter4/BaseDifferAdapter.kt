@@ -2,6 +2,7 @@ package com.chad.library.adapter4
 
 import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.AsyncListDiffer.ListListener
+import com.mozhimen.xmlk.vhk.VHKLifecycle
 import java.util.*
 
 /**
@@ -12,7 +13,7 @@ import java.util.*
  * @param T 数据类型
  * @param VH ViewHolder 类型
  */
-abstract class BaseDifferAdapter<T : Any, VH : RecyclerView.ViewHolder>(
+abstract class BaseDifferAdapter<T : Any, VH : VHKLifecycle>(
     config: AsyncDifferConfig<T>, items: List<T>
 ) : BaseQuickAdapter<T, VH>() {
 

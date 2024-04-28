@@ -36,6 +36,7 @@ class AnimationAdapter :
     }
 
     override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: Status?) {
+        super.onBindViewHolder(holder, position, item)
         when (holder.layoutPosition % 3) {
             0 -> holder.setImageResource(R.id.img, R.mipmap.animation_img1)
             1 -> holder.setImageResource(R.id.img, R.mipmap.animation_img2)
@@ -47,17 +48,17 @@ class AnimationAdapter :
             "\"He was one of Australia's most of distinguished artistes, renowned for his portraits\""
 
 
-
-        holder.getView<TextView>(R.id.tweetText).text = buildSpannedString {
+        val tweetText = holder.findViewById<TextView>(R.id.tweetText)
+        tweetText.text = buildSpannedString {
             append(msg)
             inSpans(clickableSpan) {
                 append("landscapes and nedes")
             }
         }
-        holder.getView<TextView>(R.id.tweetText).movementMethod = ClickableMovementMethod.getInstance()
-        holder.getView<TextView>(R.id.tweetText).isFocusable = false
-        holder.getView<TextView>(R.id.tweetText).isClickable = false
-        holder.getView<TextView>(R.id.tweetText).isLongClickable = false
+        tweetText.movementMethod = ClickableMovementMethod.getInstance()
+        tweetText.isFocusable = false
+        tweetText.isClickable = false
+        tweetText.isLongClickable = false
     }
 
     private val clickableSpan: ClickableSpan = object : ClickableSpan() {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.library.adapter4.BaseSingleItemAdapter
 import com.chad.library.adapter4.fullspan.FullSpanAdapterType
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
 
 class HomeTopHeaderAdapter : BaseSingleItemAdapter<Any, HomeTopHeaderAdapter.VH>(),
     FullSpanAdapterType {
@@ -16,7 +17,7 @@ class HomeTopHeaderAdapter : BaseSingleItemAdapter<Any, HomeTopHeaderAdapter.VH>
         val HEAD_VIEWTYPE = 0x10000556
     }
 
-    class VH(view: View) : RecyclerView.ViewHolder(view)
+    class VH(view: View) : BaseViewHolder(view)
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(LayoutInflater.from(parent.context).inflate(R.layout.top_view, parent, false))

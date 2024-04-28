@@ -8,6 +8,7 @@ import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemHeaderAndFooterBinding
 import com.chad.baserecyclerviewadapterhelper.entity.Movie
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
 
 /**
  * @author: limuyang
@@ -20,13 +21,14 @@ class UpFetchAdapter : BaseQuickAdapter<Movie, UpFetchAdapter.VH>() {
         val viewBinding: ItemHeaderAndFooterBinding = ItemHeaderAndFooterBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-    ) : RecyclerView.ViewHolder(viewBinding.root)
+    ) : BaseViewHolder(viewBinding.root)
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int, item: Movie?) {
+        super.onBindViewHolder(holder, position, item)
         when (holder.layoutPosition % 3) {
             0 -> holder.viewBinding.iv.setImageResource(R.mipmap.animation_img1)
             1 -> holder.viewBinding.iv.setImageResource(R.mipmap.animation_img2)

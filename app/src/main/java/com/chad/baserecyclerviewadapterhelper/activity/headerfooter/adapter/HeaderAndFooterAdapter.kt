@@ -8,6 +8,7 @@ import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemHeaderAndFooterBinding
 import com.chad.baserecyclerviewadapterhelper.entity.Status
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
@@ -15,7 +16,7 @@ import com.chad.library.adapter4.BaseQuickAdapter
 class HeaderAndFooterAdapter(list: List<Status>) :
     BaseQuickAdapter<Status, HeaderAndFooterAdapter.VH>(list) {
 
-    class VH(var binding: ItemHeaderAndFooterBinding) : RecyclerView.ViewHolder(binding.root)
+    class VH(var binding: ItemHeaderAndFooterBinding) : BaseViewHolder(binding.root)
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         val binding =
@@ -24,6 +25,7 @@ class HeaderAndFooterAdapter(list: List<Status>) :
     }
 
     override fun onBindViewHolder(holder: VH, position: Int, item: Status?) {
+        super.onBindViewHolder(holder, position, item)
         when (holder.layoutPosition % 3) {
             0 -> holder.binding.iv.setImageResource(R.mipmap.animation_img1)
             1 -> holder.binding.iv.setImageResource(R.mipmap.animation_img2)

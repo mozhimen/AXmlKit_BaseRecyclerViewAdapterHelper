@@ -12,7 +12,7 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
  * @Date 2024/4/26
  * @Version 1.0
  */
-class BaseViewHolder : QuickViewHolder {
+open class BaseViewHolder : QuickViewHolder {
     constructor(view: View) : super(view)
 
     constructor(@LayoutRes resId: Int, parent: ViewGroup) : super(resId, parent)

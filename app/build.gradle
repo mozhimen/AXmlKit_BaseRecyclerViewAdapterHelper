@@ -47,6 +47,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation project(path: ':library')
+    implementation project(path: ':adapter4_ext')
+    implementation project(path: ':AXmlKit:vhk')
     implementation project(':SwiftKit:basick')
 
     implementation 'androidx.cardview:cardview:1.0.0'

@@ -16,6 +16,7 @@ import com.chad.baserecyclerviewadapterhelper.databinding.LayoutAnimationBinding
 import com.chad.baserecyclerviewadapterhelper.entity.Status
 import com.chad.baserecyclerviewadapterhelper.utils.Tips
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
 
 /**
  * @author: limuyang
@@ -28,13 +29,14 @@ class RecyclerViewAdapter : BaseQuickAdapter<Status, RecyclerViewAdapter.VH>() {
         val viewBinding: LayoutAnimationBinding = LayoutAnimationBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-    ) : RecyclerView.ViewHolder(viewBinding.root)
+    ) : BaseViewHolder(viewBinding.root)
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
     }
 
     protected override fun onBindViewHolder(holder: VH, position: Int, item: Status?) {
+        super.onBindViewHolder(holder, position, item)
         when (holder.layoutPosition % 3) {
             0 -> holder.viewBinding.img.setImageResource(R.mipmap.animation_img1)
             1 -> holder.viewBinding.img.setImageResource(R.mipmap.animation_img2)

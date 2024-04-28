@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * ViewDataBinding 快速使用的 ViewHolder
  * @param <DB> ViewDataBinding
  */
-public class DataBindingHolder<DB extends ViewDataBinding> extends RecyclerView.ViewHolder {
+public class DataBindingHolder<DB extends ViewDataBinding> extends QuickViewHolder {
 
     private final DB binding;
 

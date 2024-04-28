@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemClickChildviewBinding;
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemClickViewBinding;
@@ -13,15 +13,16 @@ import com.chad.baserecyclerviewadapterhelper.databinding.ItemLongClickChildview
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemLongClickViewBinding;
 import com.chad.baserecyclerviewadapterhelper.entity.ClickEntity;
 import com.chad.library.adapter4.BaseMultiItemAdapter;
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder;
 
 import java.util.List;
 
 /**
  *
  */
-public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity> {
+public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity, BaseViewHolder> {
 
-    static class ItemViewVH extends RecyclerView.ViewHolder {
+    static class ItemViewVH extends BaseViewHolder {
 
         ItemClickViewBinding viewBinding;
 
@@ -35,7 +36,7 @@ public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity> {
         }
     }
 
-    static class ItemChildVH extends RecyclerView.ViewHolder {
+    static class ItemChildVH extends BaseViewHolder {
 
         ItemClickChildviewBinding viewBinding;
 
@@ -49,7 +50,7 @@ public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity> {
         }
     }
 
-    static class ItemLongClickVH extends RecyclerView.ViewHolder {
+    static class ItemLongClickVH extends BaseViewHolder {
 
         ItemLongClickViewBinding viewBinding;
 
@@ -63,7 +64,7 @@ public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity> {
         }
     }
 
-    static class ItemChildLongClickVH extends RecyclerView.ViewHolder {
+    static class ItemChildLongClickVH extends BaseViewHolder {
 
         ItemLongClickChildviewBinding viewBinding;
 
@@ -83,56 +84,58 @@ public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity> {
     public ItemClickAdapter(List<ClickEntity> data) {
         super(data);
 
-        addItemType(ClickEntity.CLICK_ITEM_VIEW, new OnMultiItemAdapterListener<ClickEntity, ItemViewVH>() {
+        addItemType(ClickEntity.CLICK_ITEM_VIEW, new OnMultiItemAdapterListener<ClickEntity, BaseViewHolder>() {
 
             @NonNull
             @Override
-            public ItemViewVH onCreate(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+            public BaseViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
                 return new ItemViewVH(parent);
             }
 
             @Override
-            public void onBind(@NonNull ItemViewVH holder, int position, ClickEntity item) {
+            public void onBindViewHolder(@NonNull BaseViewHolder holder, ClickEntity item, int position) {
             }
 
             @Override
-            public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
+            public void onViewDetachedFromWindow(BaseViewHolder holder, @Nullable ClickEntity item, @Nullable Integer position) {
                 if (holder instanceof ItemViewVH) {
                     System.out.println("---------------------- >> onViewDetachedFromWindow ItemViewVH");
                 }
             }
-        }).addItemType(ClickEntity.CLICK_ITEM_CHILD_VIEW, new OnMultiItemAdapterListener<ClickEntity, ItemChildVH>() {
+        }).addItemType(ClickEntity.CLICK_ITEM_CHILD_VIEW, new OnMultiItemAdapterListener<ClickEntity, BaseViewHolder>() {
 
             @NonNull
             @Override
-            public ItemChildVH onCreate(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+            public BaseViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
                 return new ItemChildVH(parent);
             }
 
             @Override
-            public void onBind(@NonNull ItemChildVH holder, int position, ClickEntity item) {
+            public void onBindViewHolder(BaseViewHolder holder, @Nullable ClickEntity item, int position) {
+
             }
-        }).addItemType(ClickEntity.LONG_CLICK_ITEM_VIEW, new OnMultiItemAdapterListener<ClickEntity, ItemLongClickVH>() {
+        }).addItemType(ClickEntity.LONG_CLICK_ITEM_VIEW, new OnMultiItemAdapterListener<ClickEntity, BaseViewHolder>() {
 
             @NonNull
             @Override
-            public ItemLongClickVH onCreate(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+            public BaseViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
                 return new ItemLongClickVH(parent);
             }
 
             @Override
-            public void onBind(@NonNull ItemLongClickVH holder, int position, ClickEntity item) {
+            public void onBindViewHolder(BaseViewHolder holder, @Nullable ClickEntity item, int position) {
             }
-        }).addItemType(ClickEntity.LONG_CLICK_ITEM_CHILD_VIEW, new OnMultiItemAdapterListener<ClickEntity, ItemChildLongClickVH>() {
+
+        }).addItemType(ClickEntity.LONG_CLICK_ITEM_CHILD_VIEW, new OnMultiItemAdapterListener<ClickEntity, BaseViewHolder>() {
 
             @NonNull
             @Override
-            public ItemChildLongClickVH onCreate(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
+            public BaseViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
                 return new ItemChildLongClickVH(parent);
             }
 
             @Override
-            public void onBind(@NonNull ItemChildLongClickVH holder, int position, ClickEntity item) {
+            public void onBindViewHolder(@NonNull BaseViewHolder holder, ClickEntity item, int position) {
             }
         }).onItemViewType(new OnItemViewTypeListener<ClickEntity>() {
             @Override

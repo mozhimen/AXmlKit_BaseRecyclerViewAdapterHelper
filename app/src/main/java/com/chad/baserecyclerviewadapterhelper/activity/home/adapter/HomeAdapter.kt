@@ -9,41 +9,45 @@ import com.chad.baserecyclerviewadapterhelper.databinding.DefSectionHeadBinding
 import com.chad.baserecyclerviewadapterhelper.databinding.HomeItemViewBinding
 import com.chad.baserecyclerviewadapterhelper.entity.HomeEntity
 import com.chad.library.adapter4.BaseMultiItemAdapter
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-class HomeAdapter(data: List<HomeEntity>) : BaseMultiItemAdapter<HomeEntity>(data) {
+class HomeAdapter(data: List<HomeEntity>) : BaseMultiItemAdapter<HomeEntity,BaseViewHolder>(data) {
 
-    class ItemVH(val viewBinding: HomeItemViewBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    class ItemVH(val viewBinding: HomeItemViewBinding) : BaseViewHolder(viewBinding.root)
 
-    class HeaderVH(val viewBinding: DefSectionHeadBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    class HeaderVH(val viewBinding: DefSectionHeadBinding) : BaseViewHolder(viewBinding.root)
 
     init {
-        addItemType(ITEM_TYPE, object : OnMultiItemAdapterListener<HomeEntity, ItemVH> {
-            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): ItemVH {
+        addItemType(ITEM_TYPE, object : OnMultiItemAdapterListener<HomeEntity, BaseViewHolder> {
+            override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): ItemVH {
                 val viewBinding =
                     HomeItemViewBinding.inflate(LayoutInflater.from(context), parent, false)
                 return ItemVH(viewBinding)
             }
 
-            override fun onBind(holder: ItemVH, position: Int, item: HomeEntity?) {
+            override fun onBindViewHolder(holder: BaseViewHolder, item: HomeEntity?, position: Int) {
                 if (item == null) return
-                holder.viewBinding.textView.text = item.name
-                holder.viewBinding.icon.setImageResource(item.imageResource)
+                if (holder is ItemVH){
+                    holder.viewBinding.textView.text = item.name
+                    holder.viewBinding.icon.setImageResource(item.imageResource)
+                }
             }
-        }).addItemType(SECTION_TYPE, object : OnMultiItemAdapterListener<HomeEntity, HeaderVH> {
-            override fun onCreate(context: Context, parent: ViewGroup, viewType: Int): HeaderVH {
+        }).addItemType(SECTION_TYPE, object : OnMultiItemAdapterListener<HomeEntity, BaseViewHolder> {
+            override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): HeaderVH {
                 val viewBinding =
                     DefSectionHeadBinding.inflate(LayoutInflater.from(context), parent, false)
                 return HeaderVH(viewBinding)
             }
 
-            override fun onBind(holder: HeaderVH, position: Int, item: HomeEntity?) {
+            override fun onBindViewHolder(holder: BaseViewHolder, item: HomeEntity?, position: Int) {
                 if (item == null) return
-
-                holder.viewBinding.more.visibility = View.GONE
-                holder.viewBinding.header.text = item.sectionTitle
+                if (holder is HeaderVH){
+                    holder.viewBinding.more.visibility = View.GONE
+                    holder.viewBinding.header.text = item.sectionTitle
+                }
             }
 
             override fun isFullSpanItem(itemType: Int): Boolean {

@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemGroupTypeBinding
 import com.chad.baserecyclerviewadapterhelper.entity.GroupDemoEntity
 import com.chad.baserecyclerviewadapterhelper.utils.dp
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
 
 /**
  * 每一组的Adapter
@@ -22,13 +22,14 @@ class GroupAdapter : BaseQuickAdapter<GroupDemoEntity.Group, GroupAdapter.VH>(){
     class VH(
         parent: ViewGroup,
         val binding: ItemGroupTypeBinding = ItemGroupTypeBinding.inflate(LayoutInflater.from(parent.context), parent ,false)
-    ):RecyclerView.ViewHolder(binding.root)
+    ):BaseViewHolder(binding.root)
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH {
         return VH(parent)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int, item: GroupDemoEntity.Group?) {
+        super.onBindViewHolder(holder, position, item)
         if (item == null) return
 
         holder.binding.tvTitle.text = item.title

@@ -31,6 +31,7 @@ public class DataBindingAdapter extends BaseQuickAdapter<Movie, DataBindingHolde
 
     @Override
     protected void onBindViewHolder(@NonNull DataBindingHolder<ItemMovieBinding> holder, int position, @Nullable Movie item) {
+        super.onBindViewHolder(holder, position, item);
         if (item == null) return;
 
         // 获取 Binding

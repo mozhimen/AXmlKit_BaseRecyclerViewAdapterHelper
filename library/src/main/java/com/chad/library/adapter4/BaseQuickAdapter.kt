@@ -23,7 +23,11 @@ import com.chad.library.adapter4.animation.SlideInLeftAnimation
 import com.chad.library.adapter4.animation.SlideInRightAnimation
 import com.chad.library.adapter4.util.asStaggeredGridFullSpan
 import com.chad.library.adapter4.viewholder.StateLayoutVH
+import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnDestroy
+import com.mozhimen.basick.utilk.androidx.lifecycle.handleLifecycleEventOnStart
 import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.xmlk.vhk.VHKLifecycle
 import java.util.Collections
 
 /**
@@ -32,9 +36,9 @@ import java.util.Collections
  * @param VH : BaseViewHolder
  * @constructor layoutId, data(Can null parameters, the default is empty data)
  */
- class BaseQuickAdapter<T : Any, VH : RecyclerView.ViewHolder>(
+abstract class BaseQuickAdapter<T : Any, VH : VHKLifecycle>(
     open var items: List<T> = emptyList()
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), LifecycleOwner, IUtilK {
+) : RecyclerView.Adapter<VH>(), LifecycleOwner, IUtilK {
 
     override val lifecycle: Lifecycle
         get() = lifecycleRegistry
@@ -185,7 +189,10 @@ import java.util.Collections
      * @param holder A fully initialized helper.
      * @param item   The item that needs to be displayed.
      */
-    protected abstract fun onBindViewHolder(holder: VH, position: Int, item: T?)
+    @CallSuper
+    protected open fun onBindViewHolder(holder: VH, position: Int, item: T?) {
+        holder.onBind()
+    }
 
     /**
      * Optional implementation this method and use the helper to adapt the view to the given item.
@@ -253,9 +260,9 @@ import java.util.Collections
 
     final override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
-    ): RecyclerView.ViewHolder {
+    ): VH {
         if (viewType == EMPTY_VIEW) {
-            return StateLayoutVH(parent, stateView)
+            return StateLayoutVH(parent, stateView) as VH
         }
 
         return onCreateViewHolder(parent.context, parent, viewType).apply {
@@ -263,7 +270,7 @@ import java.util.Collections
         }
     }
 
-    final override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    final override fun onBindViewHolder(holder: VH, position: Int) {
         if (holder is StateLayoutVH) {
             holder.changeStateView(stateView)
             return
@@ -273,7 +280,7 @@ import java.util.Collections
     }
 
     final override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>
+        holder: VH, position: Int, payloads: MutableList<Any>
     ) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
@@ -301,8 +308,8 @@ import java.util.Collections
      * @param holder
      */
     @CallSuper
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
-        super.onViewAttachedToWindow(holder)
+    override fun onViewAttachedToWindow(holder: VH) {
+        holder.onViewAttachedToWindow()
 
         if (holder is StateLayoutVH || isFullSpanItem(getItemViewType(holder.bindingAdapterPosition))) {
             holder.asStaggeredGridFullSpan()
@@ -316,22 +323,30 @@ import java.util.Collections
     }
 
     @CallSuper
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+    override fun onViewDetachedFromWindow(holder: VH) {
+        holder.onViewDetachedFromWindow()
+
         mOnViewAttachStateChangeListeners?.forEach {
             it.onViewDetachedFromWindow(holder)
         }
     }
 
     @CallSuper
+    override fun onViewRecycled(holder: VH) {
+        holder.onViewRecycled()
+    }
+
+    @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        lifecycleRegistry.handleLifecycleEventOnStart()
         _recyclerView = recyclerView
     }
 
     @CallSuper
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        lifecycleRegistry.handleLifecycleEventOnDestroy()
         _recyclerView = null
     }
-
 
     /**
      * 绑定 item 点击事件
@@ -567,10 +582,24 @@ import java.util.Collections
      */
     open operator fun set(@IntRange(from = 0) position: Int, data: T) {
         if (position >= items.size) {
-            throw IndexOutOfBoundsException("position: ${position}. size:${items.size}")
+//            throw IndexOutOfBoundsException("position: ${position}. size:${items.size}")
+            return
         }
         mutableItems[position] = data
         notifyItemChanged(position)
+    }
+
+    /**
+     * change data
+     * 改变某一位置数据
+     */
+    open operator fun set(@IntRange(from = 0) position: Int, data: T, payload: Any?) {
+        if (position >= items.size) {
+            return
+        }
+        mutableItems[position] = data
+        UtilKLogWrapper.d("BaseQuickAdapter>>>>>", "setData: $payload")
+        notifyItemChanged(position, payload)
     }
 
     /**
@@ -695,7 +724,7 @@ import java.util.Collections
             range.last
         }
 
-        for (it in last downTo  range.first) {
+        for (it in last downTo range.first) {
             mutableItems.removeAt(it)
         }
 
@@ -746,9 +775,11 @@ import java.util.Collections
                 is java.util.ArrayList -> {
                     items as java.util.ArrayList
                 }
+
                 is MutableList -> {
                     items as MutableList
                 }
+
                 else -> {
                     items.toMutableList().apply { items = this }
                 }
@@ -763,7 +794,7 @@ import java.util.Collections
 
     fun getOnItemClickListener(): OnItemClickListener<T>? = mOnItemClickListener
 
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener<T>?)  = apply {
+    fun setOnItemLongClickListener(listener: OnItemLongClickListener<T>?) = apply {
         this.mOnItemLongClickListener = listener
     }
 

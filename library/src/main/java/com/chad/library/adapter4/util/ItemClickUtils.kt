@@ -4,6 +4,7 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseQuickAdapter
+import com.mozhimen.xmlk.vhk.VHKLifecycle
 
 /**
  * @author 李沐阳
@@ -45,7 +46,7 @@ private abstract class DebouncedClickListener<T : Any>(private val interval: Lon
  * @param block
  * @receiver
  */
-fun <T : Any, VH : RecyclerView.ViewHolder> BaseQuickAdapter<T, VH>.setOnDebouncedItemClick(
+fun <T : Any, VH : VHKLifecycle> BaseQuickAdapter<T, VH>.setOnDebouncedItemClick(
     time: Long = 500,
     block: BaseQuickAdapter.OnItemClickListener<T>
 ) = this.setOnItemClickListener(object : DebouncedClickListener<T>(time) {
@@ -61,7 +62,7 @@ fun <T : Any, VH : RecyclerView.ViewHolder> BaseQuickAdapter<T, VH>.setOnDebounc
  * @param block
  * @receiver
  */
-fun <T : Any, VH : RecyclerView.ViewHolder> BaseQuickAdapter<T, VH>.addOnDebouncedChildClick(
+fun <T : Any, VH : VHKLifecycle> BaseQuickAdapter<T, VH>.addOnDebouncedChildClick(
     @IdRes id: Int,
     time: Long = 500,
     block: BaseQuickAdapter.OnItemChildClickListener<T>

@@ -1,6 +1,7 @@
 package com.chad.library.adapter4
 
 import androidx.recyclerview.widget.RecyclerView
+import com.mozhimen.xmlk.vhk.VHKLifecycle
 
 /**
  * Adapter for single item
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
  * @param VH viewHolder类型 type of the viewHolder
  * @property mItem 数据 data
  */
-abstract class BaseSingleItemAdapter<T : Any, VH : RecyclerView.ViewHolder>(private var mItem: T? = null) :
+abstract class BaseSingleItemAdapter<T : Any, VH : VHKLifecycle>(private var mItem: T? = null) :
     BaseQuickAdapter<Any, VH>() {
 
     protected abstract fun onBindViewHolder(holder: VH, item: T?)
@@ -20,6 +21,7 @@ abstract class BaseSingleItemAdapter<T : Any, VH : RecyclerView.ViewHolder>(priv
     }
 
     final override fun onBindViewHolder(holder: VH, position: Int, item: Any?) {
+        super.onBindViewHolder(holder, position, item)
         onBindViewHolder(holder, mItem)
     }
 

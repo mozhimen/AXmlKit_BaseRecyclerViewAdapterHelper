@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mozhimen.xmlk.vhk.VHKLifecycle
 import java.lang.ref.WeakReference
 
 /**
@@ -11,17 +12,17 @@ import java.lang.ref.WeakReference
  * 多类型布局
  *
  */
-abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
-    BaseQuickAdapter<T, RecyclerView.ViewHolder>(items) {
+abstract class BaseMultiItemAdapter<T : Any, VH : VHKLifecycle>(items: List<T> = emptyList()) :
+    BaseQuickAdapter<T, VH>(items) {
 
     private val typeViewHolders =
-        SparseArray<OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>>(1)
+        SparseArray<OnMultiItemAdapterListener<T, VH>>(1)
 
     private var onItemViewTypeListener: OnItemViewTypeListener<T>? = null
 
     override fun onCreateViewHolder(
         context: Context, parent: ViewGroup, viewType: Int
-    ): RecyclerView.ViewHolder {
+    ): VH {
         val listener = typeViewHolders.get(viewType)
             ?: throw IllegalArgumentException("ViewType: $viewType not found onViewHolderListener，please use addItemType() first!")
 
@@ -30,12 +31,13 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, item: T?) {
+    override fun onBindViewHolder(holder: VH, position: Int, item: T?) {
+        super.onBindViewHolder(holder, position, item)
         findListener(holder)?.onBindViewHolder(holder, item, position)
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder, position: Int, item: T?, payloads: List<Any>
+        holder: VH, position: Int, item: T?, payloads: List<Any>
     ) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position, item)
@@ -51,14 +53,14 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
      * @param itemViewType Int
      * @param listener Int
      */
-    fun <V : RecyclerView.ViewHolder> addItemType(
-        itemViewType: Int, listener: OnMultiItemAdapterListener<T, V>
+    fun addItemType(
+        itemViewType: Int, listener: OnMultiItemAdapterListener<T, VH>
     ) = apply {
         if (listener is OnMultiItem) {
             listener.weakA = WeakReference(this)
         }
         typeViewHolders.put(
-            itemViewType, listener as OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>
+            itemViewType, listener as OnMultiItemAdapterListener<T, VH>
         )
     }
 
@@ -76,28 +78,28 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
             ?: super.getItemViewType(position, list)
     }
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+    override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
 
         val position = getPosition(holder)
         findListener(holder)?.onViewAttachedToWindow(holder, position?.let { getItem(it) }, position)
     }
 
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+    override fun onViewDetachedFromWindow(holder: VH) {
         super.onViewDetachedFromWindow(holder)
 
         val position = getPosition(holder)
         findListener(holder)?.onViewDetachedFromWindow(holder, position?.let { getItem(it) }, position)
     }
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+    override fun onViewRecycled(holder: VH) {
         super.onViewRecycled(holder)
 
         val position = getPosition(holder)
         findListener(holder)?.onViewRecycled(holder, position?.let { getItem(it) }, position)
     }
 
-    override fun onFailedToRecycleView(holder: RecyclerView.ViewHolder): Boolean {
+    override fun onFailedToRecycleView(holder: VH): Boolean {
         return findListener(holder)?.onFailedToRecycleView(holder) ?: false
     }
 
@@ -106,8 +108,8 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
                 (typeViewHolders.get(itemType)?.isFullSpanItem(itemType) == true)
     }
 
-    private fun findListener(holder: RecyclerView.ViewHolder): OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>? {
-        return holder.itemView.getTag(R.id.BaseQuickAdapter_key_multi) as? OnMultiItemAdapterListener<T, RecyclerView.ViewHolder>
+    private fun findListener(holder: RecyclerView.ViewHolder): OnMultiItemAdapterListener<T, VH>? {
+        return holder.itemView.getTag(R.id.BaseQuickAdapter_key_multi) as? OnMultiItemAdapterListener<T, VH>
     }
 
     /**
@@ -116,22 +118,22 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
      * @param T 数据类型
      * @param V ViewHolder 类型
      */
-    interface OnMultiItemAdapterListener<T, V : RecyclerView.ViewHolder> {
-        fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): V
+    interface OnMultiItemAdapterListener<T, VH> {
+        fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH
 
-        fun onBindViewHolder(holder: V, item: T?, position: Int)
+        fun onBindViewHolder(holder: VH, item: T?, position: Int)
 
-        fun onBindViewHolder(holder: V, item: T?, position: Int, payloads: List<Any>) {
+        fun onBindViewHolder(holder: VH, item: T?, position: Int, payloads: List<Any>) {
             onBindViewHolder(holder, item, position)
         }
 
-        fun onViewAttachedToWindow(holder: V, item: T?, position: Int?) {}
+        fun onViewAttachedToWindow(holder: VH, item: T?, position: Int?) {}
 
-        fun onViewDetachedFromWindow(holder: V, item: T?, position: Int?) {}
+        fun onViewDetachedFromWindow(holder: VH, item: T?, position: Int?) {}
 
-        fun onViewRecycled(holder: V, item: T?, position: Int?) {}
+        fun onViewRecycled(holder: VH, item: T?, position: Int?) {}
 
-        fun onFailedToRecycleView(holder: V): Boolean = false
+        fun onFailedToRecycleView(holder: VH): Boolean = false
 
         fun isFullSpanItem(itemType: Int): Boolean {
             return false
@@ -146,11 +148,11 @@ abstract class BaseMultiItemAdapter<T : Any>(items: List<T> = emptyList()) :
      * @param V
      * @constructor Create empty On multi item
      */
-    abstract class OnMultiItem<T : Any, V : RecyclerView.ViewHolder> :
-        OnMultiItemAdapterListener<T, V> {
-        internal var weakA: WeakReference<BaseMultiItemAdapter<T>>? = null
+    abstract class OnMultiItem<T : Any, VH : VHKLifecycle> :
+        OnMultiItemAdapterListener<T, VH> {
+        internal var weakA: WeakReference<BaseMultiItemAdapter<T,VH>>? = null
 
-        val adapter: BaseMultiItemAdapter<T>?
+        val adapter: BaseMultiItemAdapter<T,VH>?
             get() = weakA?.get()
 
         val context: Context?
