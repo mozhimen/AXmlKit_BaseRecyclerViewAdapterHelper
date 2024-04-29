@@ -19,7 +19,7 @@ class NormalProvider : BaseItemProvider<SItem>() {
     override val layoutId: Int
         get() = R.layout.item_normal
 
-    override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int?) {
+    override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int) {
         super.onBindViewHolder(holder, item, position)
         if (item is SItem.Normal) {
             holder.findViewById<TextView>(R.id.item_txt).text = item.text

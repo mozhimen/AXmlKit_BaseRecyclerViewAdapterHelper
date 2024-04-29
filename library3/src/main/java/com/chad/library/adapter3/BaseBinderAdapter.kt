@@ -67,11 +67,11 @@ open class BaseBinderAdapter(list: MutableList<Any>? = null) : BaseQuickAdapter<
     }
 
     @SuppressLint("MissingSuperCall")
-    override fun onBindViewHolderInner(holder: BaseViewHolder, item: Any) {
+    override fun onBindViewHolderInner(holder: BaseViewHolder, item: Any, position: Int) {
         getItemBinder(holder.itemViewType).convert(holder, item)
     }
 
-    override fun onBindViewHolderInner(holder: BaseViewHolder, item: Any, payloads: List<Any>) {
+    override fun onBindViewHolderInner(holder: BaseViewHolder, item: Any, position: Int, payloads: List<Any>) {
         getItemBinder(holder.itemViewType).convert(holder, item, payloads)
     }
 

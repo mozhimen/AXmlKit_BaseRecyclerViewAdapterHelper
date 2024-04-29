@@ -544,7 +544,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
             }
 
             HEADER_VIEW, EMPTY_VIEW, FOOTER_VIEW -> return
-            else -> onBindViewHolderInner(holder, getItem(position - headerLayoutCount))
+            else -> onBindViewHolderInner(holder, getItem(position - headerLayoutCount),position - headerLayoutCount)
         }
     }
 
@@ -565,7 +565,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
             }
 
             HEADER_VIEW, EMPTY_VIEW, FOOTER_VIEW -> return
-            else -> onBindViewHolderInner(holder, getItem(position - headerLayoutCount), payloads)
+            else -> onBindViewHolderInner(holder, getItem(position - headerLayoutCount),position - headerLayoutCount, payloads)
         }
     }
 
@@ -578,7 +578,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      * @param item   The item that needs to be displayed.
      */
     @CallSuper
-    protected open fun onBindViewHolderInner(holder: VH, item: T) {
+    protected open fun onBindViewHolderInner(holder: VH, item: T, position: Int) {
         UtilKLogWrapper.v(TAG, "onBindViewHolderInner: holder $holder item $item")
         holder.onBind()
     }
@@ -595,7 +595,7 @@ abstract class BaseQuickAdapter<T, VH : BaseViewHolder>
      * @param item     The item that needs to be displayed.
      * @param payloads payload info.
      */
-    protected open fun onBindViewHolderInner(holder: VH, item: T, payloads: List<Any>) {
+    protected open fun onBindViewHolderInner(holder: VH, item: T, position: Int, payloads: List<Any>) {
         UtilKLogWrapper.v(TAG, "onBindViewHolderInner: holder $holder item $item payloads $payloads")
     }
 

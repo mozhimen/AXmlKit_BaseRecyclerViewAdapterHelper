@@ -74,12 +74,12 @@ abstract class BaseProviderMultiAdapter<T>(data: MutableList<T>? = null) :
     }
 
     @SuppressLint("MissingSuperCall")
-    override fun onBindViewHolderInner(holder: BaseViewHolder, item: T) {
-        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, getPosition(holder))
+    override fun onBindViewHolderInner(holder: BaseViewHolder, item: T, position: Int) {
+        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, position)
     }
 
-    override fun onBindViewHolderInner(holder: BaseViewHolder, item: T, payloads: List<Any>) {
-        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, getPosition(holder), payloads)
+    override fun onBindViewHolderInner(holder: BaseViewHolder, item: T, position: Int, payloads: List<Any>) {
+        getItemProvider(holder.itemViewType)!!.onBindViewHolder(holder, item, position, payloads)
     }
 
     /////////////////////////////////////////////////////////////////////////////////

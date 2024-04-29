@@ -18,16 +18,6 @@ import com.mozhimen.basick.utilk.commons.IUtilK
  */
 abstract class BaseItemProvider<T : Any> : IUtilK, BaseMultiItemAdapter.OnMultiItem<T, BaseViewHolder>() {
 
-    abstract val layoutId: Int
-        @LayoutRes
-        get
-
-    ///////////////////////////////////////////////////////////////////////
-
-    override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return BaseViewHolder(parent.getItemView(layoutId))
-    }
-
     @CallSuper
     override fun onBindViewHolder(holder: BaseViewHolder, item: T?, position: Int) {
         UtilKLogWrapper.v(TAG, "onBindViewHolder:         $holder position $position item $item")

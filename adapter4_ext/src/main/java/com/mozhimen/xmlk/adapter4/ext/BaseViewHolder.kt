@@ -15,5 +15,5 @@ import com.chad.library.adapter4.viewholder.QuickViewHolder
 open class BaseViewHolder : QuickViewHolder {
     constructor(view: View) : super(view)
 
-    constructor(@LayoutRes resId: Int, parent: ViewGroup) : super(resId, parent)
+    constructor(parent: ViewGroup, @LayoutRes intResLayout: Int) : super(parent, intResLayout)
 }

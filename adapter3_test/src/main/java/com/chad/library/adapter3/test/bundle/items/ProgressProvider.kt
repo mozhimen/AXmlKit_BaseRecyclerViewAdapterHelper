@@ -22,7 +22,7 @@ class ProgressProvider : BaseItemProvider<SItem>() {
     override val layoutId: Int
         get() = R.layout.item_progress
 
-    override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int?) {
+    override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int) {
         super.onBindViewHolder(holder, item, position)
         if (item is SItem.Progress) {
             val progress = holder.findViewById<ProgressBar>(R.id.item_progress)
@@ -32,7 +32,7 @@ class ProgressProvider : BaseItemProvider<SItem>() {
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int?, payloads: List<Any>) {
+    override fun onBindViewHolder(holder: BaseViewHolder, item: SItem, position: Int, payloads: List<Any>) {
         val progress = holder.findViewById<ProgressBar>(R.id.item_progress)
         if (payloads.isNotEmpty()) {
             val flag = payloads[0]

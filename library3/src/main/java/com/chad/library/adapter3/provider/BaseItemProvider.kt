@@ -76,12 +76,12 @@ abstract class BaseItemProvider<T> : IUtilK {
     }
 
     @CallSuper
-    open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int?) {
+    open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int) {
         UtilKLogWrapper.v(TAG, "onBindViewHolder:         $holder position $position item $item")
         holder.onBind()
     }
 
-    open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int?, payloads: List<Any>) {}
+    open fun onBindViewHolder(holder: BaseViewHolder, item: T, position: Int, payloads: List<Any>) {}
 
     /**
      * （可选重写）ViewHolder创建完毕以后的回掉方法。

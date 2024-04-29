@@ -11,40 +11,19 @@ import android.widget.TextView
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import com.mozhimen.xmlk.vhk.VHKLifecycle
+import com.mozhimen.xmlk.vhk.VHKRecycler
 
 /**
  * Quick-use ViewHolder class
  * 快速使用的 ViewHolder 类
  */
-open class QuickViewHolder : VHKLifecycle {
+open class QuickViewHolder : VHKRecycler {
 
     constructor(view: View) : super(view)
 
-    constructor(@LayoutRes resId: Int, parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(resId, parent, false))
+    constructor(parent: ViewGroup, @LayoutRes intResLayout: Int) : this(LayoutInflater.from(parent.context).inflate(intResLayout, parent, false))
 
     //////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Views indexed with their IDs
-     * 记录找到的 view
-     */
-    private val views: SparseArray<View> = SparseArray()
-
-    //////////////////////////////////////////////////////////////////////////
-
-    fun <T : View> findViewById(@IdRes viewId: Int): T {
-        val view = findViewByIdOrNull<T>(viewId)
-        checkNotNull(view) { "No view found with id $viewId" }
-        return view
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    fun <T : View> findViewByIdOrNull(@IdRes viewId: Int): T? {
-        val view = views.get(viewId) ?: return itemView.findViewById<T>(viewId)?.apply {
-            views.put(viewId, this)
-        }
-        return view as? T
-    }
 
     fun <T : View> Int.findView(): T? {
         return itemView.findViewById(this)

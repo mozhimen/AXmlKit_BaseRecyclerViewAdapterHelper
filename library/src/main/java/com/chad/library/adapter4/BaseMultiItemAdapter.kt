@@ -5,6 +5,7 @@ import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mozhimen.xmlk.vhk.VHKLifecycle
+import com.mozhimen.xmlk.vhk.commons.IVHKProvider
 import java.lang.ref.WeakReference
 
 /**
@@ -118,22 +119,8 @@ abstract class BaseMultiItemAdapter<T : Any, VH : VHKLifecycle>(items: List<T> =
      * @param T 数据类型
      * @param V ViewHolder 类型
      */
-    interface OnMultiItemAdapterListener<T, VH> {
+    interface OnMultiItemAdapterListener<T:Any, VH> : IVHKProvider<T, VH> {
         val itemViewType: Int
-
-        fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): VH
-
-        fun onBindViewHolder(holder: VH, item: T?, position: Int)
-
-        fun onBindViewHolder(holder: VH, item: T?, position: Int, payloads: List<Any>) {
-            onBindViewHolder(holder, item, position)
-        }
-
-        fun onViewAttachedToWindow(holder: VH, item: T?, position: Int?) {}
-
-        fun onViewDetachedFromWindow(holder: VH, item: T?, position: Int?) {}
-
-        fun onViewRecycled(holder: VH, item: T?, position: Int?) {}
 
         fun onFailedToRecycleView(holder: VH): Boolean = false
 
