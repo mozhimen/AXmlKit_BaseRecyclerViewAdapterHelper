@@ -45,7 +45,7 @@ class AnimActivity : BaseActivityVDB<ActivityAnimBinding>() {
 
     inner class AnimRecyclerViewAdapter(private val _list: List<AnimBundle>) : RecyclerView.Adapter<AnimViewHolder>() {
 
-        private val _panelAnimProxy: PanelAnimProxy by lazy { PanelAnimProxy() }
+        private val _panelAnimProxy: PanelAnimProxy by lazy_ofNone { PanelAnimProxy() }
 
         override fun getItemCount(): Int =
             _list.size
