@@ -6,8 +6,8 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import com.chad.library.adapter4.BaseMultiItemAdapter
 import com.chad.library.adapter4.util.getItemView
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 
 /**
  * @ClassName BaseItemProvider

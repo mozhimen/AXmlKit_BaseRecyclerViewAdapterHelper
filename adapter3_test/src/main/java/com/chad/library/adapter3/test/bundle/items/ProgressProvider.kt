@@ -7,7 +7,7 @@ import com.chad.library.adapter3.test.R
 import com.chad.library.adapter3.test.bundle.mos.SEvent
 import com.chad.library.adapter3.test.bundle.mos.SItem
 import com.chad.library.adapter3.viewholder.BaseViewHolder
-import com.mozhimen.basick.utilk.kotlin.ranges.constraint
+import com.mozhimen.kotlin.utilk.kotlin.ranges.constraint
 
 /**
  * @ClassName ProgressProvider

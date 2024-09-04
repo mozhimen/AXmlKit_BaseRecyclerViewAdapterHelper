@@ -9,7 +9,7 @@ import com.chad.library.adapter3.test.R
 import com.chad.library.adapter3.test.bundle.mos.SEvent
 import com.chad.library.adapter3.test.bundle.mos.SItem
 import com.chad.library.adapter3.test.databinding.ActivityBundleBinding
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
+import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDB
 
 /**
  * @ClassName BundleActivity

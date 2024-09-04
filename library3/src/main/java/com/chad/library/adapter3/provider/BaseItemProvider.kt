@@ -2,7 +2,7 @@ package com.chad.library.adapter3.provider
 
 import android.content.Context
 import android.util.Log
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
@@ -11,7 +11,7 @@ import androidx.annotation.LayoutRes
 import com.chad.library.adapter3.BaseProviderMultiAdapter
 import com.chad.library.adapter3.util.getItemView
 import com.chad.library.adapter3.viewholder.BaseViewHolder
-import com.mozhimen.basick.utilk.commons.IUtilK
+import com.mozhimen.kotlin.utilk.commons.IUtilK
 import java.lang.ref.WeakReference
 
 /**

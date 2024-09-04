@@ -15,8 +15,8 @@ import com.chad.library.adapter3.test.anim.commons.IExpandable
 import com.chad.library.adapter3.test.databinding.ActivityAnimBinding
 import com.mozhimen.basick.animk.builder.mos.MAnimKConfig
 import com.mozhimen.basick.animk.builder.utils.AnimKTypeUtil
-import com.mozhimen.basick.elemk.androidx.appcompat.bases.databinding.BaseActivityVDB
-import com.mozhimen.basick.utilk.android.view.applyGone
+import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDB
+import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.xmlk.vhk.utils.VHKAnimUtil
 
 /**

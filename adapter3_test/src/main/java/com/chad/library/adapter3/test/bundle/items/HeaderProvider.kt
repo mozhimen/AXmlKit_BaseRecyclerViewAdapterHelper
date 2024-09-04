@@ -8,10 +8,10 @@ import com.chad.library.adapter3.provider.BaseItemProvider
 import com.chad.library.adapter3.test.R
 import com.chad.library.adapter3.test.bundle.mos.SItem
 import com.chad.library.adapter3.viewholder.BaseViewHolder
-import com.mozhimen.basick.elemk.androidx.recyclerview.OnScrollListenerIdleImpl
-import com.mozhimen.basick.taskk.handler.TaskKHandler
-import com.mozhimen.basick.utilk.android.util.UtilKLogWrapper
-import com.mozhimen.basick.utilk.android.widget.showToast
+import com.mozhimen.kotlin.elemk.androidx.recyclerview.OnScrollListenerIdleImpl
+import com.mozhimen.kotlin.utilk.android.os.UtilKHandlerWrapper
+import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
+import com.mozhimen.kotlin.utilk.android.widget.showToast
 import java.lang.ref.WeakReference
 
 /**
@@ -51,7 +51,7 @@ class HeaderProvider : BaseItemProvider<SItem>() {
                 setTag("runnable".hashCode(), runnable)
                 text = "Header"
             }
-            TaskKHandler.postDelayed(3000L, runnable)
+            UtilKHandlerWrapper.postDelayed(3000L, runnable)
         }
     }
 
@@ -61,7 +61,7 @@ class HeaderProvider : BaseItemProvider<SItem>() {
         val listener = txt.getTag("listener".hashCode()) as? OnScrollListenerIdleImpl?
         runnable?.let {
             UtilKLogWrapper.d(TAG,"removeCallbacks")
-            TaskKHandler.get().removeCallbacks(it)
+            UtilKHandlerWrapper.get().removeCallbacks(it)
         }
         listener?.let {
             UtilKLogWrapper.d(TAG,"removeOnScrollListener")
