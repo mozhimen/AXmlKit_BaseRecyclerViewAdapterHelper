@@ -4,7 +4,7 @@ import android.view.View
 import com.chad.library.adapter3.test.anim.AnimActivity
 import com.chad.library.adapter3.test.bundle.BundleActivity
 import com.chad.library.adapter3.test.databinding.ActivityMainBinding
-import com.mozhimen.mvvmk.bases.activity.databinding.BaseActivityVDB
+import com.mozhimen.bindk.bases.activity.databinding.BaseActivityVDB
 import com.mozhimen.kotlin.utilk.android.content.startContext
 
 class MainActivity : BaseActivityVDB<ActivityMainBinding>() {
