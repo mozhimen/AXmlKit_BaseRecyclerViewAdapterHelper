@@ -18,6 +18,7 @@ include ':app'
 include ':library'
 include ':library3'
 include ':adapter3_test'
+include ':adapter4_ext'
 //SwiftKit
 include ':SwiftKit'
 project(':SwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\SwiftKit")
@@ -30,4 +31,8 @@ include ':AXmlKit:bark'
 include ':AXmlKit:drawablek_progress'
 include ':AXmlKit:vhk'
 include ':AXmlKit:recyclerk'
-include ':adapter4_ext'
+//KUtilKit
+include ':KUtilKit'
+project(':KUtilKit').projectDir = new File("D:\\WorkSpace\\GitHub\\KUtilKit")
+include ':KUtilKit:utilk_android'
+include ':KUtilKit:utilk_kotlin'
