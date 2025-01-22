@@ -53,8 +53,8 @@ android {
 
 
 dependencies {
-    implementation(project(":SwiftKit:basick"))
-    implementation(project(":SwiftKit:xmlk"))
+    implementation(project(":ASwiftKit:basick"))
+    implementation(project(":ASwiftKit:xmlk"))
     implementation(project(":AXmlKit:vhk"))
 
     implementation("androidx.annotation:annotation:1.6.0")

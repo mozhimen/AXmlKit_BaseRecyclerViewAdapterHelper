@@ -40,7 +40,7 @@ dependencies {
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(project(":library3"))
-    implementation(project(":SwiftKit:basick"))
+    implementation(project(":ASwiftKit:basick"))
     implementation(project(":AXmlKit:bark"))
     implementation(project(":AXmlKit:vhk"))
 
