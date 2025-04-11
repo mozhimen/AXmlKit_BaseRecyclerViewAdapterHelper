@@ -44,11 +44,13 @@ include ':ASwiftKit'
 project(':ASwiftKit').projectDir = new File("D:\\WorkSpace\\GitHub\\ASwiftKit")
 include ':ASwiftKit:basick'
 include ':ASwiftKit:xmlk'
+include ':ASwiftKit:uik'
+include ':ASwiftKit:uik:databinding'
 //AXmlKit
 include ':AXmlKit'
 project(':AXmlKit').projectDir = new File("D:\\WorkSpace\\GitHub\\AXmlKit")
 include ':AXmlKit:bark'
-include ':AXmlKit:drawablek_progress'
+include ':AXmlKit:drawablek:progress'
 include ':AXmlKit:vhk'
 include ':AXmlKit:recyclerk'
 

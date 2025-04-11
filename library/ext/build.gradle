@@ -30,10 +30,15 @@ android {
 }
 
 dependencies {
-
     implementation project(':ASwiftKit:basick')
+    implementation project(':ASwiftKit:uik:databinding')
+    implementation project(':ASwiftKit:xmlk')
     implementation project(':AXmlKit:vhk')
-    api project(':AXmlKit_BaseRecyclerViewAdapterHelper:library')
+    if (rootProject.name=="AXmlKit_BaseRecyclerViewAdapterHelper"){
+        api project(':library')
+    }else {
+        api project(':AXmlKit_BaseRecyclerViewAdapterHelper:library')
+    }
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -1,4 +1,4 @@
-package com.mozhimen.xmlk.adapter4.ext
+package com.mozhimen.xmlk.adapter4.ext.bases
 
 import android.view.View
 import android.view.ViewGroup
