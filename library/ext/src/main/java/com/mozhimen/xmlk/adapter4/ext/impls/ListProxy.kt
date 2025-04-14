@@ -5,7 +5,6 @@ import com.mozhimen.basick.bases.BaseWakeBefDestroyLifecycleObserver
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
-import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 import com.mozhimen.xmlk.adapter4.ext.commons.IListActivity
 import com.mozhimen.xmlk.adapter4.ext.cons.CListLoadState
 
@@ -19,7 +18,7 @@ import com.mozhimen.xmlk.adapter4.ext.cons.CListLoadState
 @OApiCall_BindViewLifecycle
 @OApiInit_ByLazy
 @OApiCall_BindLifecycle
-class ListProxy<DES : Any, VH : BaseViewHolder>(private var _listActivity: IListActivity<DES, VH>?) : BaseWakeBefDestroyLifecycleObserver() {
+class ListProxy<DES : Any>(private var _listActivity: IListActivity<DES>?) : BaseWakeBefDestroyLifecycleObserver() {
 
     fun initLayout(owner: LifecycleOwner) {
         val listActivity = _listActivity ?: return

@@ -12,9 +12,9 @@ import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
  * @Date 2024/6/20
  * @Version 1.0
  */
-interface IListActivity<DES : Any, VH : BaseViewHolder> {
+interface IListActivity<DES : Any> {
     fun getViewModel():BaseListViewModel<DES>
-    fun getListAdapter(): BaseQuickAdapter<DES, VH>
+    fun getListAdapter(): BaseQuickAdapter<DES,out BaseViewHolder>
     fun getSwipeRefreshLayout(): SwipeRefreshLayout?
     fun getSwipeRefreshLayoutColorScheme(): Int = 0
     fun getRecyclerView(): RecyclerView

@@ -1,48 +1,37 @@
-package com.mozhimen.xmlk.adapter4.ext.bases
+package com.mozhimen.xmlk.adapter4.ext.bases.uis.viewdatabinding.activity
 
-import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
-import com.mozhimen.kotlin.utilk.java.util.UtilKDateWrapper
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM.lazy_ofNone
-import com.mozhimen.uik.databinding.bases.viewdatabinding.fragment.BaseFragmentVDBVMSelf
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseActivityVDBVM
 import com.mozhimen.xmlk.adapter4.ext.commons.BaseListViewModel
 import com.mozhimen.xmlk.adapter4.ext.commons.IListActivity
 import com.mozhimen.xmlk.adapter4.ext.impls.ListProxy
 
 /**
- * @ClassName BaseLeleListFragmentVBVM
- * @Description TODO
+ * @ClassName BaseListActivityVBVM
  * @Author Mozhimen & Kolin Zhao
  * @Date 2023/11/21 10:27
  * @Version 1.0
  */
-abstract class BaseListFragmentVDBVMSelf<DES : Any, VH : BaseViewHolder, VB : ViewDataBinding, VM : BaseListViewModel<DES>> : BaseFragmentVDBVMSelf<VB, VM>, IListActivity<DES, VH> {
+@OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
+abstract class BaseListActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM : BaseListViewModel<DES>> : BaseActivityVDBVM<VDB, VM>(), IListActivity<DES> {
 
-    /**
-     * 针对Hilt(@JvmOverloads kotlin默认参数值无效)
-     * @constructor
-     */
-    constructor() : super()
-
-    //////////////////////////////////////////////////////////////////////////////
-
-    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
-    private val _listProxy: ListProxy<DES, VH> by lazy_ofNone { ListProxy<DES, VH>(this).apply { bindLifecycle(this@BaseListFragmentVDBVMSelf) } }
+    private val _listProxy by lazy_ofNone { ListProxy<DES>(this).apply { bindLifecycle(this@BaseListActivityVDBVM) } }
 
     //////////////////////////////////////////////////////////////////////////////
 
     @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
     @CallSuper
     override fun initLayout() {
-        UtilKLogWrapper.d(TAG, "initLayout: time ${UtilKDateWrapper.getNowStr()}")
         super.initLayout()
-        _listProxy.initLayout(this.viewLifecycleOwner)
+        _listProxy.initLayout(this@BaseListActivityVDBVM)
     }
 
     //////////////////////////////////////////////////////////////////////////////
