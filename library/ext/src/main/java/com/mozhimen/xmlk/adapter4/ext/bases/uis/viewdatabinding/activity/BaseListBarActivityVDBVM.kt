@@ -2,36 +2,36 @@ package com.mozhimen.xmlk.adapter4.ext.bases.uis.viewdatabinding.activity
 
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
-import androidx.viewbinding.ViewBinding
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
 import com.mozhimen.kotlin.utilk.android.view.applyGone
 import com.mozhimen.kotlin.utilk.android.view.applyVisible
 import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM.lazy_ofNone
-import com.mozhimen.uik.databinding.bases.viewbinding.activity.BaseSaveStateActivityVBVM
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseBarActivityVDBVM
 import com.mozhimen.xmlk.adapter4.ext.commons.BaseListViewModel
 import com.mozhimen.xmlk.adapter4.ext.commons.IListActivity
 import com.mozhimen.xmlk.adapter4.ext.impls.ListProxy
 
 /**
- * @ClassName BaseListSaveStateActivityVBVM
+ * @ClassName BaseListBarActivityVBVM
  * @Description TODO
  * @Author Mozhimen & Kolin Zhao
  * @Date 2024/5/20
  * @Version 1.0
  */
 @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
-abstract class BaseListSaveStateActivityVBVM<DES : Any, VDB : ViewDataBinding, VM : BaseListViewModel<DES>> : BaseSaveStateActivityVBVM<VDB, VM>(), IListActivity<DES> {
+abstract class BaseListBarActivityVDBVM<DES : Any, VDB : ViewDataBinding, VM : BaseListViewModel<DES>> : BaseBarActivityVDBVM<VDB, VM>(), IListActivity<DES> {
 
-    private val _listProxy by lazy_ofNone { ListProxy<DES>(this).apply { bindLifecycle(this@BaseListSaveStateActivityVBVM) } }
+    @OptIn(OApiInit_ByLazy::class, OApiCall_BindLifecycle::class, OApiCall_BindViewLifecycle::class)
+    private val _listProxy by lazy_ofNone { ListProxy<DES>(this).apply { bindLifecycle(this@BaseListBarActivityVDBVM) } }
 
     /////////////////////////////////////////////////////////////////////
 
     @CallSuper
     override fun initLayout() {
         super.initLayout()
-        _listProxy.initLayout(this@BaseListSaveStateActivityVBVM)
+        _listProxy.initLayout(this@BaseListBarActivityVDBVM)
     }
 
     /////////////////////////////////////////////////////////////////////

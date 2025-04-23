@@ -17,6 +17,21 @@ abstract class BaseListViewModel<DES> : BaseViewModel() {
 
     //////////////////////////////////////////////////////////////////////////////
 
+    /**
+     *     override fun onRefreshList() {
+     *         viewModelScope.launch(Dispatchers.IO) {
+     *             onFirstLoadStart()
+     *             val list = _mainRepository.getAppCategoriesOnBack()
+     *             if (list.isNotEmpty()) {
+     *                 this@CategoriesViewModel.liveList.postValue(list)
+     *                 onFirstLoadFinish()
+     *             } else {
+     *                 this@CategoriesViewModel.liveList.postValue(emptyList())
+     *                 onFirstLoadEmpty()
+     *             }
+     *         }
+     *     }
+     */
     abstract fun onRefreshList()
 
     //////////////////////////////////////////////////////////////////////////////
