@@ -2,7 +2,6 @@ package com.mozhimen.xmlk.adapter4.ext.bases.uis.viewdatabinding.activity
 
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
-import androidx.viewbinding.ViewBinding
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiCall_BindViewLifecycle
 import com.mozhimen.kotlin.lintk.optins.OApiInit_ByLazy
