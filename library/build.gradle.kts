@@ -13,7 +13,7 @@ val versionName = "4.1.4"
 
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 16
