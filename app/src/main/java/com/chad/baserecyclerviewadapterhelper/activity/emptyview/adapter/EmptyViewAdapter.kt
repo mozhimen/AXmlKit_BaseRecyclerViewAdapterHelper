@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.baserecyclerviewadapterhelper.databinding.LayoutAnimationBinding
 import com.chad.baserecyclerviewadapterhelper.entity.Status
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 
 class EmptyViewAdapter : BaseQuickAdapter<Status, EmptyViewAdapter.VH>() {
 

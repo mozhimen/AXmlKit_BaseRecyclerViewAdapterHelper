@@ -11,7 +11,7 @@ import com.chad.baserecyclerviewadapterhelper.databinding.ItemGroupTypeBinding
 import com.chad.baserecyclerviewadapterhelper.entity.GroupDemoEntity
 import com.chad.baserecyclerviewadapterhelper.utils.dp
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 
 /**
  * 每一组的Adapter

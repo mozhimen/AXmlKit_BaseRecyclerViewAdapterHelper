@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.library.adapter4.BaseSingleItemAdapter
 import com.chad.library.adapter4.fullspan.FullSpanAdapterType
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 
 class HomeTopHeaderAdapter : BaseSingleItemAdapter<Any, HomeTopHeaderAdapter.VH>(),
     FullSpanAdapterType {

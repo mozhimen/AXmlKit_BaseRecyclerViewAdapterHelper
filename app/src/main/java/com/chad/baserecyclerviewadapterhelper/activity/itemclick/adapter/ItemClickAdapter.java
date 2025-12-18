@@ -13,7 +13,7 @@ import com.chad.baserecyclerviewadapterhelper.databinding.ItemLongClickChildview
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemLongClickViewBinding;
 import com.chad.baserecyclerviewadapterhelper.entity.ClickEntity;
 import com.chad.library.adapter4.BaseMultiItemAdapter;
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder;
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder;
 
 import java.util.List;
 

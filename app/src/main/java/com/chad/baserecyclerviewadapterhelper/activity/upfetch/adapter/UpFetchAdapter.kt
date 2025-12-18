@@ -8,7 +8,7 @@ import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.baserecyclerviewadapterhelper.databinding.ItemHeaderAndFooterBinding
 import com.chad.baserecyclerviewadapterhelper.entity.Movie
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 
 /**
  * @author: limuyang

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.baserecyclerviewadapterhelper.R
 import com.chad.library.adapter4.BaseSingleItemAdapter
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 
 class HeaderAdapter: BaseSingleItemAdapter<Any, HeaderAdapter.VH>() {
 

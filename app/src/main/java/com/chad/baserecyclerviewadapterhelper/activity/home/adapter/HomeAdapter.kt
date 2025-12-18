@@ -9,7 +9,7 @@ import com.chad.baserecyclerviewadapterhelper.databinding.DefSectionHeadBinding
 import com.chad.baserecyclerviewadapterhelper.databinding.HomeItemViewBinding
 import com.chad.baserecyclerviewadapterhelper.entity.HomeEntity
 import com.chad.library.adapter4.BaseMultiItemAdapter
-import com.mozhimen.xmlk.adapter4.ext.BaseViewHolder
+import com.mozhimen.xmlk.adapter4.ext.bases.BaseViewHolder
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
