@@ -17,12 +17,13 @@ class DiffDragAndSwipeAdapter :
     override fun onCreateViewHolder(
         context: Context, parent: ViewGroup, viewType: Int
     ): QuickViewHolder {
-        return QuickViewHolder(R.layout.layout_animation, parent)
+        return QuickViewHolder( parent,R.layout.layout_animation)
     }
 
     override fun onBindViewHolder(
         holder: QuickViewHolder, position: Int, item: DiffEntity?
     ) {
+        super.onBindViewHolder(holder, position, item)
         if (item == null) return
 
         holder.setText(R.id.tweetName, item.title)

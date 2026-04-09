@@ -21,12 +21,16 @@ class HomeAdapter(data: List<HomeEntity>) : BaseMultiItemAdapter<HomeEntity,Base
     class HeaderVH(val viewBinding: DefSectionHeadBinding) : BaseViewHolder(viewBinding.root)
 
     init {
-        addItemType(ITEM_TYPE, object : OnMultiItemAdapterListener<HomeEntity, BaseViewHolder> {
+        addItemType(object : OnMultiItemAdapterListener<HomeEntity, BaseViewHolder> {
+            override val itemViewType: Int
+                get() = ITEM_TYPE
             override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): ItemVH {
                 val viewBinding =
                     HomeItemViewBinding.inflate(LayoutInflater.from(context), parent, false)
                 return ItemVH(viewBinding)
             }
+
+
 
             override fun onBindViewHolder(holder: BaseViewHolder, item: HomeEntity?, position: Int) {
                 if (item == null) return
@@ -35,7 +39,10 @@ class HomeAdapter(data: List<HomeEntity>) : BaseMultiItemAdapter<HomeEntity,Base
                     holder.viewBinding.icon.setImageResource(item.imageResource)
                 }
             }
-        }).addItemType(SECTION_TYPE, object : OnMultiItemAdapterListener<HomeEntity, BaseViewHolder> {
+        }).addItemType( object : OnMultiItemAdapterListener<HomeEntity, BaseViewHolder> {
+            override val itemViewType: Int
+                get() = SECTION_TYPE
+
             override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): HeaderVH {
                 val viewBinding =
                     DefSectionHeadBinding.inflate(LayoutInflater.from(context), parent, false)

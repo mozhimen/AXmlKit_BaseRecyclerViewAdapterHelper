@@ -23,14 +23,26 @@ public class DiffUtilAdapter extends BaseDifferAdapter<DiffEntity, QuickViewHold
     @NonNull
     @Override
     protected QuickViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new QuickViewHolder(R.layout.layout_animation, parent);
+        return new QuickViewHolder(parent, R.layout.layout_animation);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull QuickViewHolder holder, int position, DiffEntity item) {
+        super.onBindViewHolder(holder, position, item);
         holder.setText(R.id.tweetName, item.getTitle())
                 .setText(R.id.tweetText, item.getContent())
                 .setText(R.id.tweetDate, item.getDate());
     }
 
+    @NonNull
+    @Override
+    public String getNAME() {
+        return "DiffUtilAdapter";
+    }
+
+    @NonNull
+    @Override
+    public String getTAG() {
+        return getNAME() + ">>>>>";
+    }
 }

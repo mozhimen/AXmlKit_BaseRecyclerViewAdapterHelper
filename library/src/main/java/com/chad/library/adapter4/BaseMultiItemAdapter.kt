@@ -127,6 +127,15 @@ abstract class BaseMultiItemAdapter<T : Any, VH : VHKLifecycle>(items: List<T> =
         fun isFullSpanItem(itemType: Int): Boolean {
             return false
         }
+
+        override fun onViewRecycled(holder: VH, item: T?, position: Int?) {
+        }
+
+        override fun onViewDetachedFromWindow(holder: VH, item: T?, position: Int?) {
+        }
+
+        override fun onViewAttachedToWindow(holder: VH, item: T?, position: Int?) {
+        }
     }
 
     /**

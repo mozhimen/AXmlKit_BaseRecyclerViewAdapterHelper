@@ -18,11 +18,12 @@ open class HeaderDragAndSwipeAdapter : BaseQuickAdapter<String, QuickViewHolder>
         parent: ViewGroup,
         viewType: Int
     ): QuickViewHolder {
-        return QuickViewHolder(R.layout.item_draggable_view, parent)
+        return QuickViewHolder( parent,R.layout.item_draggable_view)
     }
 
      override fun onBindViewHolder(holder: QuickViewHolder, position: Int, item: String?) {
-        when (holder.layoutPosition % 3) {
+         super.onBindViewHolder(holder, position, item)
+         when (holder.layoutPosition % 3) {
             0 -> holder.setImageResource(R.id.iv_head, R.mipmap.head_img0)
             1 -> holder.setImageResource(R.id.iv_head, R.mipmap.head_img1)
             2 -> holder.setImageResource(R.id.iv_head, R.mipmap.head_img2)

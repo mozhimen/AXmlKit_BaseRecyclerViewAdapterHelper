@@ -11,7 +11,7 @@ class FooterAdapter(
 ) : BaseSingleItemAdapter<Any, QuickViewHolder>() {
 
     override fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int): QuickViewHolder {
-        return QuickViewHolder(R.layout.footer_view, parent)
+        return QuickViewHolder( parent,R.layout.footer_view)
     }
 
     override fun onBindViewHolder(holder: QuickViewHolder, item: Any?) {

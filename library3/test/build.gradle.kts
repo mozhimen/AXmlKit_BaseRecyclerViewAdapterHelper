@@ -37,12 +37,12 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.github.mozhimen.ASwiftKit:uik:2.0.4")
+    implementation("com.github.mozhimen.ASwiftKit:xmlk:2.0.4")
+    implementation("com.github.mozhimen.ASwiftKit:basick:2.0.4")
+    implementation("com.github.mozhimen.AXmlKit:bark:0.0.1")
+    implementation("com.github.mozhimen.AXmlKit:vhk:0.0.1")
     implementation(project(":library3"))
-    implementation(project(":ASwiftKit:basick"))
-    implementation(project(":AXmlKit:bark"))
-    implementation(project(":AXmlKit:vhk"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

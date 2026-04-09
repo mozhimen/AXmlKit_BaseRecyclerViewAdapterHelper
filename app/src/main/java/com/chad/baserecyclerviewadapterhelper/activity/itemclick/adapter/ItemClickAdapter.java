@@ -126,7 +126,12 @@ public class ItemClickAdapter extends BaseMultiItemAdapter<ClickEntity, BaseView
             public void onBindViewHolder(BaseViewHolder holder, @Nullable ClickEntity item, int position) {
             }
 
-        }).addItemType(ClickEntity.LONG_CLICK_ITEM_CHILD_VIEW, new OnMultiItemAdapterListener<ClickEntity, BaseViewHolder>() {
+        }).addItemType(new OnMultiItemAdapterListener<ClickEntity, BaseViewHolder>() {
+
+            @Override
+            public int getItemViewType() {
+                return ClickEntity.LONG_CLICK_ITEM_CHILD_VIEW;
+            }
 
             @NonNull
             @Override

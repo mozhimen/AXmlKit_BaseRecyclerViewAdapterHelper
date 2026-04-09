@@ -16,11 +16,12 @@ public class DragAndSwipeAdapter extends BaseQuickAdapter<String, QuickViewHolde
     @NonNull
     @Override
     protected QuickViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new QuickViewHolder(R.layout.item_draggable_view, parent);
+        return new QuickViewHolder( parent,R.layout.item_draggable_view);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull QuickViewHolder holder, int position, String item) {
+        super.onBindViewHolder(holder, position, item);
         switch (holder.getLayoutPosition() % 3) {
             case 0 -> holder.setImageResource(R.id.iv_head, R.mipmap.head_img0);
             case 1 -> holder.setImageResource(R.id.iv_head, R.mipmap.head_img1);
@@ -39,5 +40,17 @@ public class DragAndSwipeAdapter extends BaseQuickAdapter<String, QuickViewHolde
     @Override
     public void dataRemoveAt(int position) {
         removeAt(position);
+    }
+
+    @NonNull
+    @Override
+    public String getNAME() {
+        return "DragAndSwipeAdapter";
+    }
+
+    @NonNull
+    @Override
+    public String getTAG() {
+        return "DragAndSwipeAdapter>>>>>";
     }
 }

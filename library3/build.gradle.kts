@@ -5,26 +5,27 @@ import java.util.Properties
 plugins {
     id("com.android.library")
     kotlin("android")
-    `maven-publish`
-    signing
+//    `maven-publish`
+//    signing
 }
 
 val versionName = "3.0.14"
 
-
 android {
+    namespace = "com.chad.library"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 14
+        multiDexEnabled = true
 
-        consumerProguardFiles("proguard-rules.pro")
+        consumerProguardFiles("consumer-rules.pro")
     }
 
 
     buildTypes {
         getByName("release") {
-            consumerProguardFiles("proguard-rules.pro")
+            consumerProguardFiles("consumer-rules.pro")
         }
     }
 
@@ -41,33 +42,29 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "com.chad.library"
 
-
-    publishing {
-        singleVariant("release") {
-            // if you don't want sources/javadoc, remove these lines
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
+//    publishing {
+//        singleVariant("release") {
+//            // if you don't want sources/javadoc, remove these lines
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
+//    }
 }
 
 
 dependencies {
-    implementation(project(":ASwiftKit:basick"))
-    implementation(project(":ASwiftKit:xmlk"))
-    implementation(project(":AXmlKit:vhk"))
-//    implementation("androidx.databinding:databinding-runtime:8.0.0")
+    implementation("com.github.mozhimen.ASwiftKit:basick:2.0.4")
+    implementation("com.github.mozhimen.ASwiftKit:xmlk:2.0.4")
+    implementation("com.github.mozhimen.AXmlKit:vhk:0.0.1")
+    implementation("com.github.mozhimen.ALibKit_Jetpack:databinding-bom:0.0.7")
 }
 
-
-var signingKeyId = ""//签名的密钥后8位
-var signingPassword = ""//签名设置的密码
-var secretKeyRingFile = ""//生成的secring.gpg文件目录
-var ossrhUsername = ""//sonatype用户名
-var ossrhPassword = "" //sonatype密码
-
+//var signingKeyId = ""//签名的密钥后8位
+//var signingPassword = ""//签名设置的密码
+//var secretKeyRingFile = ""//生成的secring.gpg文件目录
+//var ossrhUsername = ""//sonatype用户名
+//var ossrhPassword = "" //sonatype密码
 
 //val localProperties: File = project.rootProject.file("local.properties")
 //
@@ -88,73 +85,73 @@ var ossrhPassword = "" //sonatype密码
 //    println("No props file, loading env vars")
 //}
 
-afterEvaluate {
-
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components.findByName("release"))
-                groupId = "io.github.cymchad"
-                artifactId = "BaseRecyclerViewAdapterHelper"
-                version = versionName
-
-                pom {
-                    name.value("BaseRecyclerViewAdapterHelper")
-                    description.value("Powerful and flexible RecyclerAdapter")
-                    url.value("https://github.com/CymChad/BaseRecyclerViewAdapterHelper")
-
-                    licenses {
-                        license {
-                            //协议类型
-                            name.value("The MIT License")
-                            url.value("https://github.com/CymChad/BaseRecyclerViewAdapterHelper/blob/master/LICENSE")
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id.value("limuyang2")
-                            name.value("limuyang")
-                            email.value("limuyang2@hotmail.com")
-                        }
-                    }
-
-                    scm {
-                        connection.value("scm:git@github.com/CymChad/BaseRecyclerViewAdapterHelper.git")
-                        developerConnection.value("scm:git@github.com/CymChad/BaseRecyclerViewAdapterHelper.git")
-                        url.value("https://github.com/CymChad/BaseRecyclerViewAdapterHelper")
-                    }
-                }
-            }
-
-        }
-
-        repositories {
-            maven {
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = ossrhUsername
-                    password = ossrhPassword
-                }
-            }
-        }
-
-    }
-
-}
-
-gradle.taskGraph.whenReady {
-    if (allTasks.any { it is Sign }) {
-
-        allprojects {
-            extra["signing.keyId"] = signingKeyId
-            extra["signing.secretKeyRingFile"] = secretKeyRingFile
-            extra["signing.password"] = signingPassword
-        }
-    }
-}
-
-signing {
-    sign(publishing.publications)
-}
+//afterEvaluate {
+//
+//    publishing {
+//        publications {
+//            create<MavenPublication>("release") {
+//                from(components.findByName("release"))
+//                groupId = "io.github.cymchad"
+//                artifactId = "BaseRecyclerViewAdapterHelper"
+//                version = versionName
+//
+//                pom {
+//                    name.value("BaseRecyclerViewAdapterHelper")
+//                    description.value("Powerful and flexible RecyclerAdapter")
+//                    url.value("https://github.com/CymChad/BaseRecyclerViewAdapterHelper")
+//
+//                    licenses {
+//                        license {
+//                            //协议类型
+//                            name.value("The MIT License")
+//                            url.value("https://github.com/CymChad/BaseRecyclerViewAdapterHelper/blob/master/LICENSE")
+//                        }
+//                    }
+//
+//                    developers {
+//                        developer {
+//                            id.value("limuyang2")
+//                            name.value("limuyang")
+//                            email.value("limuyang2@hotmail.com")
+//                        }
+//                    }
+//
+//                    scm {
+//                        connection.value("scm:git@github.com/CymChad/BaseRecyclerViewAdapterHelper.git")
+//                        developerConnection.value("scm:git@github.com/CymChad/BaseRecyclerViewAdapterHelper.git")
+//                        url.value("https://github.com/CymChad/BaseRecyclerViewAdapterHelper")
+//                    }
+//                }
+//            }
+//
+//        }
+//
+//        repositories {
+//            maven {
+//                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+//                credentials {
+//                    username = ossrhUsername
+//                    password = ossrhPassword
+//                }
+//            }
+//        }
+//
+//    }
+//
+//}
+//
+//gradle.taskGraph.whenReady {
+//    if (allTasks.any { it is Sign }) {
+//
+//        allprojects {
+//            extra["signing.keyId"] = signingKeyId
+//            extra["signing.secretKeyRingFile"] = secretKeyRingFile
+//            extra["signing.password"] = signingPassword
+//        }
+//    }
+//}
+//
+//signing {
+//    sign(publishing.publications)
+//}
 
