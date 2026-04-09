@@ -1,14 +1,12 @@
 package com.chad.library.adapter3.test.bundle.items
 
 import android.annotation.SuppressLint
-import android.nfc.Tag
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter3.provider.BaseItemProvider
 import com.chad.library.adapter3.test.R
 import com.chad.library.adapter3.test.bundle.mos.SItem
 import com.chad.library.adapter3.viewholder.BaseViewHolder
-import com.mozhimen.kotlin.elemk.androidx.recyclerview.OnScrollListenerIdleImpl
+import com.mozhimen.kotlin.elemk.androidx.recyclerview.impls.OnScrollListenerIdleImpl
 import com.mozhimen.kotlin.utilk.android.os.UtilKHandlerWrapper
 import com.mozhimen.kotlin.utilk.android.util.UtilKLogWrapper
 import com.mozhimen.kotlin.utilk.android.widget.showToast
@@ -28,7 +26,7 @@ class HeaderProvider : BaseItemProvider<SItem>() {
         get() = R.layout.item_normal
 
     private fun next(tag: String, pos: Int, holder: BaseViewHolder) {
-        com.mozhimen.basick.utilk.android.util.UtilKLogWrapper.d(TAG, "tag $tag 停止了滑动 $pos holder $holder")
+        UtilKLogWrapper.d(TAG, "tag $tag 停止了滑动 $pos holder $holder")
         "tag $tag 停止了滑动 $pos".showToast()
     }
 

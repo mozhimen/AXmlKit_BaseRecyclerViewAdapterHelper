@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter3.test.R
 import com.chad.library.adapter3.test.anim.commons.IExpandable
 import com.chad.library.adapter3.test.databinding.ActivityAnimBinding
-import com.mozhimen.basick.animk.builder.mos.MAnimKConfig
-import com.mozhimen.basick.animk.builder.utils.AnimKTypeUtil
-import com.mozhimen.uik.databinding.bases.activity.databinding.BaseActivityVDB
+import com.mozhimen.animk.builder.mos.MAnimKConfig
+import com.mozhimen.animk.builder.utils.AnimKTypeUtil
+import com.mozhimen.animk.builder.utils.VHKAnimUtil
 import com.mozhimen.kotlin.utilk.android.view.applyGone
-import com.mozhimen.xmlk.vhk.utils.VHKAnimUtil
+import com.mozhimen.kotlin.utilk.kotlin.UtilKLazyJVM
+import com.mozhimen.uik.databinding.bases.viewdatabinding.activity.BaseActivityVDB
 
 /**
  * @ClassName AnimActivity
@@ -45,7 +46,7 @@ class AnimActivity : BaseActivityVDB<ActivityAnimBinding>() {
 
     inner class AnimRecyclerViewAdapter(private val _list: List<AnimBundle>) : RecyclerView.Adapter<AnimViewHolder>() {
 
-        private val _panelAnimProxy: PanelAnimProxy by lazy_ofNone { PanelAnimProxy() }
+        private val _panelAnimProxy: PanelAnimProxy by UtilKLazyJVM.lazy_ofNone { PanelAnimProxy() }
 
         override fun getItemCount(): Int =
             _list.size
