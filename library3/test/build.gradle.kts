@@ -37,12 +37,12 @@ android {
 }
 
 dependencies {
-    implementation("com.github.mozhimen.ASwiftKit:uik-databinding:2.0.4")
-    implementation("com.github.mozhimen.ASwiftKit:uik:2.0.4")
-    implementation("com.github.mozhimen.ASwiftKit:xmlk:2.0.4")
-    implementation("com.github.mozhimen.ASwiftKit:basick:2.0.4")
-    implementation("com.github.mozhimen.AXmlKit:bark:0.0.1")
-    implementation("com.github.mozhimen.AXmlKit:vhk:0.0.1")
+    implementation("com.github.mozhimen.ASwiftKit:uik-databinding:2.1.6")
+    implementation("com.github.mozhimen.ASwiftKit:uik:2.1.6")
+    implementation("com.github.mozhimen.ASwiftKit:xmlk:2.1.6")
+    implementation("com.github.mozhimen.ASwiftKit:basick:2.1.6")
+    implementation("com.github.mozhimen.AXmlKit:bark:0.0.5")
+    implementation("com.github.mozhimen.AXmlKit:vhk:0.0.5")
     implementation("com.github.mozhimen.AAnimKit:builder:0.0.1")
     implementation(project(":library3"))
 

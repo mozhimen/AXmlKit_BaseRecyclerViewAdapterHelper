@@ -54,9 +54,9 @@ android {
 
 
 dependencies {
-    implementation("com.github.mozhimen.ASwiftKit:basick:2.0.4")
-    implementation("com.github.mozhimen.ASwiftKit:xmlk:2.0.4")
-    implementation("com.github.mozhimen.AXmlKit:vhk:0.0.1")
+    implementation("com.github.mozhimen.ASwiftKit:basick:2.1.6")
+    implementation("com.github.mozhimen.ASwiftKit:xmlk:2.1.6")
+    implementation("com.github.mozhimen.AXmlKit:vhk:0.0.5")
     implementation("com.github.mozhimen.ALibKit_Jetpack:annotation:0.0.7")
     implementation("com.github.mozhimen.ALibKit_Jetpack:recyclerview:0.0.7")
     implementation("com.github.mozhimen.ALibKit_Jetpack:databinding-bom:0.0.7")
